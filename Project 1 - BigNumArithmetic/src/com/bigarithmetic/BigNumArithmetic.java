@@ -1,6 +1,7 @@
 package com.bigarithmetic;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Scanner;
 
 // On my honor:
@@ -23,9 +24,10 @@ import java.util.Scanner;
 // letter of this restriction.
 
 public class BigNumArithmetic {
+	
 
     /**
-     * Remove possible leading zeroes that number may contain.
+     * Remove possible leading zeroes that token may contain.
      * 
      * @param token
      * @return
@@ -58,20 +60,43 @@ public class BigNumArithmetic {
         return trimmedToken.toString();
     }
 
+    // Make sure number of operators = number of operands - 1
+    private static boolean operationIsValid(String[] operationLine) {
+    	return false;
+    }
 
     public static void main(String[] args) {
         String filename = args[0];
-        beginParsing(filename);
+        scanFile(filename);
     }
 
-
-    public static void beginParsing(String filename) {
+    public static String calculateOperation(String[] operationLine) {
+    	// First validate that it will be possible to do the math.
+    	if (!operationIsValid(operationLine)) {
+    		return Arrays.toString(operationLine);
+    	}
+    	
+    	for (int i = 0; i < operationLine.length; i++) {
+    		
+    	}
+    	return"";
+    }
+    
+    public static void scanFile(String filename) {
         try {
             Scanner sc = new Scanner(new File(filename));// Create our new
                                                          // scanner
-            while (sc.hasNext()) {// While the scanner has information to read
-                String numOrOperator = sc.next();// Read the next term
-                System.out.println(removeLeadingZeroes(numOrOperator));
+            while (sc.hasNextLine()) { // While the scanner has information to read
+                String currentLine = sc.nextLine();// Read the next term
+                if (currentLine.trim().length() == 0) continue;
+                String[] currentLineArr = currentLine.trim().split(" +");
+                calculateOperation(currentLineArr);
+//                for (int i = 0; i < currentLineArr.length; i++) {
+//                	String currentToken = currentLineArr[i];
+//                	
+//                	System.out.print(removeLeadingZeroes(currentToken) + " ");	
+//                }
+//                System.out.println("");
             }
         }
         catch (Exception e) {
