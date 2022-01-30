@@ -81,6 +81,9 @@ public class BigNumArithmetic {
     
     
     private static SinglyLinkedListObj add(SinglyLinkedListObj num1, SinglyLinkedListObj num2) {
+    	SinglyLinkedListObj.ListNode currN1 = num1.head;
+    	SinglyLinkedListObj.ListNode currN2 = num2.head;
+    	
     	
     }
     
