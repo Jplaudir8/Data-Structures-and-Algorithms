@@ -37,11 +37,13 @@ public class Stack {
             throw new Error("Stack is empty, cannot pop!");
         }
     }
-    
+
+
     public Object peek() {
         if (this.size != 0) {
             return this.stack.head.value;
-        } else {
+        }
+        else {
             return null;
         }
     }

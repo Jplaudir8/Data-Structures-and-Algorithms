@@ -1,6 +1,5 @@
 package com.bigarithmetic;
 
-
 public class SinglyLinkedListObj {
     public class ListNode {
 
@@ -67,14 +66,16 @@ public class SinglyLinkedListObj {
             tail.setNext(newNode);
         }
     }
-    
+
+
     public Object removeFirst() {
         ListNode removedHead = this.head;
-        if (removedHead == null) return null;
-        
+        if (removedHead == null)
+            return null;
+
         this.head = removedHead.getNext();
         return removedHead.value;
     }
-    
+
     // TODO Might need to implement toString() method
 }
