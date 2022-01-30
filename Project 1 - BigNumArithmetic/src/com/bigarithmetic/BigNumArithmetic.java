@@ -24,8 +24,27 @@ import java.util.Scanner;
 // letter of this restriction.
 
 public class BigNumArithmetic {
-	
 
+    
+    // QUESTION: Might have to add a validation that checks whether the operands are in the right places
+    // Otherwise stack could break when popping more elements than current size e.g. *2 36
+    
+    // Make sure number of operators = number of operands - 1
+    private static boolean operationIsValid(String[] operationArray) {
+    	
+    	int numOfOperands = 0;
+    	int numOfOperators = 0;
+    	for (int i = 0; i < operationArray.length; i++) {
+    		String currToken = operationArray[i];
+    		if (currToken.equals("+") || currToken.equals("*") || currToken.equals("^")) {
+    			numOfOperators++;
+    		} else {
+    			numOfOperands++;
+    		}
+    	}
+    	return (numOfOperands - 1) == numOfOperators;
+    }
+    
     /**
      * Remove possible leading zeroes that token may contain.
      * 
@@ -59,25 +78,51 @@ public class BigNumArithmetic {
         }
         return trimmedToken.toString();
     }
-
-    // Make sure number of operators = number of operands - 1
-    private static boolean operationIsValid(String[] operationLine) {
-    	return false;
+    
+    
+    private static SinglyLinkedListObj add(SinglyLinkedListObj num1, SinglyLinkedListObj num2) {
+    	
     }
-
-    public static void main(String[] args) {
-        String filename = args[0];
-        scanFile(filename);
+    
+    private static SinglyLinkedListObj getLinkedListInteger(String currToken) {
+    	SinglyLinkedListObj newNumber = new SinglyLinkedListObj();
+    	for (int i = currToken.length() - 1; i >= 0; i--) {
+    		String currDigit = String.valueOf(currToken.charAt(i));
+    		newNumber.addLast(Integer.valueOf(currDigit));
+    	}
+    	return newNumber;
     }
-
-    public static String calculateOperation(String[] operationLine) {
+    
+    public static String calculateLine(String[] operationLine) {
     	// First validate that it will be possible to do the math.
     	if (!operationIsValid(operationLine)) {
     		return Arrays.toString(operationLine);
     	}
     	
+    	// create a stack
+    	Stack numsStack = new Stack();
+    	
     	for (int i = 0; i < operationLine.length; i++) {
-    		
+    		// if current token is an operator then pop 2 elements from stack, solve and push res
+    		// 	else its a number so push it to stack
+    		String currToken = removeLeadingZeroes(operationLine[i]);// remove leading zeroes
+    		if (currToken.equals("+") || currToken.equals("*") || currToken.equals("^")) {
+    			SinglyLinkedListObj numA = (SinglyLinkedListObj) numsStack.pop();
+    			SinglyLinkedListObj numB = (SinglyLinkedListObj) numsStack.pop();
+    			SinglyLinkedListObj result = new SinglyLinkedListObj();
+    			switch (currToken) {
+    			case "+": 
+    				result = add(numA, numB);
+    				break;
+    				
+    			}
+    			
+    			numsStack.push(result);
+    		} else {
+    			// push element found
+    			SinglyLinkedListObj newNum = getLinkedListInteger(currToken);
+    			numsStack.push(newNum);
+    		}
     	}
     	return"";
     }
@@ -89,8 +134,10 @@ public class BigNumArithmetic {
             while (sc.hasNextLine()) { // While the scanner has information to read
                 String currentLine = sc.nextLine();// Read the next term
                 if (currentLine.trim().length() == 0) continue;
+                // separate every element and store them in array
                 String[] currentLineArr = currentLine.trim().split(" +");
-                calculateOperation(currentLineArr);
+                
+                calculateLine(currentLineArr);
 //                for (int i = 0; i < currentLineArr.length; i++) {
 //                	String currentToken = currentLineArr[i];
 //                	
@@ -103,5 +150,9 @@ public class BigNumArithmetic {
             e.printStackTrace();
         }
     }
-
+    
+    public static void main(String[] args) {
+        String filename = args[0];
+        scanFile(filename);
+    }
 }
