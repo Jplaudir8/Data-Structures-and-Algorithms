@@ -78,7 +78,7 @@ public class BigNumArithmetic {
             if (currN1 != null) currN1 = currN1.getNext();
             if (currN2 != null) currN2 = currN2.getNext();
         }
-        System.out.println("finished Loop");
+        
         if (carry > 0) {
             result.addLast(carry);
         }
@@ -135,14 +135,13 @@ public class BigNumArithmetic {
             // solve and push res
             // else its a number so push it to stack
             String currToken = removeLeadingZeroes(operationLine[i]);
-            System.out.print(currToken + " ");
+            
             resultPrint.append(currToken + " ");
             
             if (currToken.equals("+") || currToken.equals("*") || currToken
                 .equals("^")) {
                 SinglyLinkedListObj numA = (SinglyLinkedListObj)numsStack.pop();
                 SinglyLinkedListObj numB = (SinglyLinkedListObj)numsStack.pop();
-                System.out.println("we popped stack twice " + numA.toString() + numB.toString());
                 SinglyLinkedListObj result = new SinglyLinkedListObj();
                 switch (currToken) {
                     case "+":
