@@ -23,12 +23,17 @@ public class SinglyLinkedListObj {
     }
 
     public ListNode head;
-
+    private int size;
+    
     public SinglyLinkedListObj() {
         this.head = null;
+        this.size = 0;
     }
 
-
+    public SinglyLinkedListObj(Object newVal) {
+        this.head = new ListNode(newVal);
+        this.size = 1;
+    }
     /**
      * Add new value to the beginning of linked list.
      * 
@@ -42,7 +47,7 @@ public class SinglyLinkedListObj {
 
         if (oldHead != null)
             this.head.setNext(oldHead);
-
+        size++;
     }
 
 
@@ -65,6 +70,7 @@ public class SinglyLinkedListObj {
             }
             tail.setNext(newNode);
         }
+        size++;
     }
 
 
@@ -72,11 +78,16 @@ public class SinglyLinkedListObj {
         ListNode removedHead = this.head;
         if (removedHead == null)
             return null;
-
+        
         this.head = removedHead.getNext();
+        size--;
         return removedHead.value;
     }
-
+    
+    public int getSize() {
+        return this.size;
+    }
+    
     // TODO Might need to implement toString() method
     /**
      * String Form of a LinkedList

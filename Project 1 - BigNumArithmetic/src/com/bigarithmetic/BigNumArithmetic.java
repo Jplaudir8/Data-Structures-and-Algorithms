@@ -86,7 +86,44 @@ public class BigNumArithmetic {
         return result;
     }
 
-
+    private static SinglyLinkedListObj multiply(SinglyLinkedListObj num1, 
+        SinglyLinkedListObj num2) {
+        SinglyLinkedListObj.ListNode currN1 = num1.head;
+        SinglyLinkedListObj.ListNode currN2 = num2.head;
+        SinglyLinkedListObj result = new SinglyLinkedListObj(0);
+        int rowNumber = 0;
+        
+        while (currN1 != null) {
+            
+            SinglyLinkedListObj.ListNode dummyN2 = currN2;
+            SinglyLinkedListObj currProductRes = new SinglyLinkedListObj();
+            int carry = 0;
+            // generate zeros depending in which row we are
+            for (int i = 0; i < rowNumber; i++) {
+                currProductRes.addFirst(0);
+            }
+            
+            while (dummyN2 != null) {
+                int n1 = (Integer) currN1.value;
+                int n2 = (Integer) dummyN2.value;
+                int n3 = n1 * n2 + carry;
+                carry = n3 / 10;
+                currProductRes.addLast(n3 % 10);
+                
+                dummyN2 = dummyN2.getNext();
+            }
+            
+            if (carry > 0) {
+                currProductRes.addLast(carry);
+            }
+            
+            result = add(result, currProductRes);
+            rowNumber++;
+            currN1 = currN1.getNext();
+        }
+        return result;
+    }
+    
     private static SinglyLinkedListObj getLinkedListInteger(String currToken) {
         SinglyLinkedListObj newNumber = new SinglyLinkedListObj();
         for (int i = currToken.length() - 1; i >= 0; i--) {
@@ -126,7 +163,7 @@ public class BigNumArithmetic {
             return Arrays.toString(operationLine);
         }
         
-        // create a stack and StringBuilder to be used for printin in file
+        // create a stack and StringBuilder to be used for printing in file
         Stack numsStack = new Stack();
         StringBuilder resultPrint = new StringBuilder("");
         
@@ -147,6 +184,9 @@ public class BigNumArithmetic {
                     case "+":
                         result = add(numA, numB);
                         break;
+                    case "*":
+                        result = multiply(numA, numB);
+                        break;
                         
                 }
                 
@@ -162,7 +202,7 @@ public class BigNumArithmetic {
         resultPrint.append("= " + numsStack.pop().toString());
         return resultPrint.toString();
     }
-
+    
 
     public static void scanFile(String filename) {
         try {
