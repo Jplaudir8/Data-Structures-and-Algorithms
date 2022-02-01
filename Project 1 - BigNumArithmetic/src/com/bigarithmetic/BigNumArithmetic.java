@@ -179,7 +179,7 @@ public class BigNumArithmetic {
             return num1;
         }
 
-        SinglyLinkedListObj squaredNum1 = multiply(num1, num1); // OK until here
+        SinglyLinkedListObj squaredNum1 = multiply(num1, num1);
 
         // generate exponent
         int exponent = getInteger(num2);
