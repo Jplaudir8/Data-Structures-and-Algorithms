@@ -25,7 +25,6 @@ import java.util.Scanner;
 
 public class BigNumArithmetic {
 
-
     /**
      * Remove possible leading zeroes that token may contain.
      * 
@@ -64,7 +63,7 @@ public class BigNumArithmetic {
     private static SinglyLinkedListObj add(
         SinglyLinkedListObj num1,
         SinglyLinkedListObj num2) {
-        
+
         SinglyLinkedListObj.ListNode currN1 = num1.head;
         SinglyLinkedListObj.ListNode currN2 = num2.head;
         SinglyLinkedListObj result = new SinglyLinkedListObj();
@@ -75,57 +74,66 @@ public class BigNumArithmetic {
             int n3 = n1 + n2 + carry;
             carry = n3 / 10; // getting possible carry
             result.addLast(n3 % 10); // adding unit
-            if (currN1 != null) currN1 = currN1.getNext();
-            if (currN2 != null) currN2 = currN2.getNext();
+            if (currN1 != null)
+                currN1 = currN1.getNext();
+            if (currN2 != null)
+                currN2 = currN2.getNext();
         }
-        
+
         if (carry > 0) {
             result.addLast(carry);
         }
-        
+
         return result;
     }
 
-    private static SinglyLinkedListObj multiply(SinglyLinkedListObj num1, 
+
+    private static SinglyLinkedListObj multiply(
+        SinglyLinkedListObj num1,
         SinglyLinkedListObj num2) {
         SinglyLinkedListObj.ListNode currN1 = num1.head;
         SinglyLinkedListObj.ListNode currN2 = num2.head;
         SinglyLinkedListObj result = new SinglyLinkedListObj(0);
         int rowNumber = 0;
-        
-        // test with special cases when multiple a number by 0 or by 1
+
+        // TODO test with special cases when multiple a number by 0 or by 1
         
         while (currN1 != null) {
-            
-            SinglyLinkedListObj.ListNode dummyN2 = currN2;
+
             SinglyLinkedListObj currProductRes = new SinglyLinkedListObj();
             int carry = 0;
+
             // generate zeros depending in which row we are
             for (int i = 0; i < rowNumber; i++) {
                 currProductRes.addFirst(0);
             }
             
+            SinglyLinkedListObj.ListNode dummyN2 = currN2;
+            
+            // multiply currN1 digit with every digit of the other operand
             while (dummyN2 != null) {
-                int n1 = (Integer) currN1.value;
-                int n2 = (Integer) dummyN2.value;
+                int n1 = (Integer)currN1.value;
+                int n2 = (Integer)dummyN2.value;
+                                
                 int n3 = n1 * n2 + carry;
                 carry = n3 / 10;
                 currProductRes.addLast(n3 % 10);
-                
+
                 dummyN2 = dummyN2.getNext();
             }
-            
+
             if (carry > 0) {
                 currProductRes.addLast(carry);
             }
-            
+
             result = add(result, currProductRes);
             rowNumber++;
             currN1 = currN1.getNext();
         }
         return result;
     }
-    
+
+
     private static SinglyLinkedListObj getLinkedList(String currToken) {
         SinglyLinkedListObj newNumber = new SinglyLinkedListObj();
         for (int i = currToken.length() - 1; i >= 0; i--) {
@@ -134,15 +142,15 @@ public class BigNumArithmetic {
         }
         return newNumber;
     }
-    
+
     // QUESTION: Might have to add a validation that checks whether the operands
     // are in the right places
     // Otherwise stack could break when popping more elements than current size
     // e.g. *2 36
 
+
     // Make sure number of operators = number of operands - 1
     private static boolean operationIsValid(String[] operationArray) {
-
         int numOfOperands = 0;
         int numOfOperators = 0;
         for (int i = 0; i < operationArray.length; i++) {
@@ -157,77 +165,85 @@ public class BigNumArithmetic {
         }
         return (numOfOperands - 1) == numOfOperators;
     }
-    
-    public static SinglyLinkedListObj pow(SinglyLinkedListObj num1, SinglyLinkedListObj num2) {
-        /*
-         * raise num1 to 2
-         * 
-         * generate exponent:
-         *      if num2 is even, num2 divide by 2
-         *      else if odd, num2 - 1 and divide by 2 and then add 1
-         * 
-         * raise num1 to exponent generated
-         *      
-         */
-        
-        SinglyLinkedListObj squaredNum1 = multiply(num1, num1);
-        
+
+
+    public static SinglyLinkedListObj pow(
+        SinglyLinkedListObj num1,
+        SinglyLinkedListObj num2) {
+
+        if (getInteger(num2) == 0) {
+            return new SinglyLinkedListObj((Integer)1);
+        }
+
+        if (getInteger(num2) == 1) {
+            return num1;
+        }
+
+        SinglyLinkedListObj squaredNum1 = multiply(num1, num1); // OK until here
+
         // generate exponent
         int exponent = getInteger(num2);
         if (exponent % 2 == 0) {
             exponent /= 2;
-        } else {
-            exponent = ((exponent - 1) / 2) + 1;
         }
-        
+        else {
+            exponent = ((exponent - 1) / 2);
+        }
+
         SinglyLinkedListObj result = squaredNum1;
-        
-        if (exponent == 0) {
-            return new SinglyLinkedListObj((Integer) 1);
-        }
-        
-        if (exponent == 1) {
-            return result;
-        }
-        
+
         for (int i = 2; i <= exponent; i++) {
             result = multiply(result, squaredNum1);
         }
+        
+        // if exponent is odd we need to multiply by num1 as part of the formula
+        if (exponent % 2 != 0) {
+            result = multiply(result, num1);
+        }
+        
         return result;
     }
-    
+
+
     public static int getInteger(SinglyLinkedListObj linkedListNum) {
         SinglyLinkedListObj.ListNode currNode = linkedListNum.head;
         int generatedNum = 0;
         StringBuilder numStr = new StringBuilder("");
-        
+
         while (currNode != null) {
-            numStr.insert(0, (Integer) currNode.value);
+            numStr.insert(0, (Integer)currNode.value);
             currNode = currNode.getNext();
         }
-        
+
         return Integer.valueOf(numStr.toString());
     }
-    
+
+
     public static String calculateLine(String[] operationLine) {
         // First validate that it will be possible to do the math.
-        
+
         if (!operationIsValid(operationLine)) {
-            return String.join(" ", operationLine) + " =";
+            // invalid operation so just remove leading zeroes and print
+            // intended operation
+            StringBuilder currentToken = new StringBuilder("");
+            for (int i = 0; i < operationLine.length; i++) {
+                currentToken.append(removeLeadingZeroes(operationLine[i]) + " ");
+            }
+            return currentToken.toString() + "=";
         }
-        
+
         // create a stack and StringBuilder to be used for printing in file
         Stack numsStack = new Stack();
         StringBuilder resultPrint = new StringBuilder("");
-        
+
         for (int i = 0; i < operationLine.length; i++) {
             // if current token is an operator then pop 2 elements from stack,
             // solve and push result to stack
             // else its a number so push into stack
             String currToken = removeLeadingZeroes(operationLine[i]);
-            
+
             resultPrint.append(currToken + " ");
-            
+
             if (currToken.equals("+") || currToken.equals("*") || currToken
                 .equals("^")) {
                 SinglyLinkedListObj numA = (SinglyLinkedListObj)numsStack.pop();
@@ -243,7 +259,7 @@ public class BigNumArithmetic {
                     case "^":
                         result = pow(numB, numA);
                 }
-                
+
                 numsStack.push(result);
             }
             else {
@@ -252,11 +268,11 @@ public class BigNumArithmetic {
                 numsStack.push(newNum);
             }
         }
-        
-        resultPrint.append("= " + numsStack.pop().toString());
+
+        resultPrint.append("= " + removeLeadingZeroes(numsStack.pop().toString()));
         return resultPrint.toString();
     }
-    
+
 
     public static void scanFile(String filename) {
         try {
@@ -270,7 +286,7 @@ public class BigNumArithmetic {
                 // separate every element and store them in array
                 String[] currentLineArr = currentLine.trim().split(" +");
                 String lineResult = calculateLine(currentLineArr);
-                System.out.print(lineResult);
+                System.out.println(lineResult);
             }
         }
         catch (Exception e) {
