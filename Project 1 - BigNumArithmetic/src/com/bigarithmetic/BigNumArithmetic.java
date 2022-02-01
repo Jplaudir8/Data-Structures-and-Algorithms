@@ -93,6 +93,8 @@ public class BigNumArithmetic {
         SinglyLinkedListObj result = new SinglyLinkedListObj(0);
         int rowNumber = 0;
         
+        // test with special cases when multiple a number by 0 or by 1
+        
         while (currN1 != null) {
             
             SinglyLinkedListObj.ListNode dummyN2 = currN2;
@@ -179,6 +181,15 @@ public class BigNumArithmetic {
         }
         
         SinglyLinkedListObj result = squaredNum1;
+        
+        if (exponent == 0) {
+            return new SinglyLinkedListObj((Integer) 1);
+        }
+        
+        if (exponent == 1) {
+            return result;
+        }
+        
         for (int i = 2; i <= exponent; i++) {
             result = multiply(result, squaredNum1);
         }
@@ -202,7 +213,7 @@ public class BigNumArithmetic {
         // First validate that it will be possible to do the math.
         
         if (!operationIsValid(operationLine)) {
-            return Arrays.toString(operationLine);
+            return String.join(" ", operationLine) + " =";
         }
         
         // create a stack and StringBuilder to be used for printing in file
