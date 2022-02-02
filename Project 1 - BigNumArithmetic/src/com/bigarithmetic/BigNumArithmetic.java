@@ -284,7 +284,7 @@ public class BigNumArithmetic {
 
     public static void scanFile(String filename) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("/Users/joanperezlozano/Downloads/RPNOutput.txt"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("RPNOutput.txt"));
             // BufferedWriter bw = new BufferedWriter(new FileWriter("../outputFiles/RPNOutput.txt"));
             Scanner sc = new Scanner(new File(filename));// Create our new
                                                          // scanner

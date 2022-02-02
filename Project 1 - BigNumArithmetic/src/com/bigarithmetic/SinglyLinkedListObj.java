@@ -101,20 +101,8 @@ public class SinglyLinkedListObj<T> {
     /**
      * String Form of a LinkedList
      *
-     * @return A String in the form of {} returned.
+     * @return A String returned.
      */
-//    @Override
-//    public String toString() {
-//        StringBuilder completeNumber = new StringBuilder("");
-//        ListNode currNode = this.head;
-//        while (currNode != null) {
-//            completeNumber.insert(0, (Integer) currNode.value);
-//            currNode = currNode.getNext();
-//        }
-//        return completeNumber.toString();
-//    }
-    
-    
     @Override
     public String toString() {
         SinglyLinkedListObj<Integer> reversedList = new SinglyLinkedListObj();
