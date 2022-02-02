@@ -31,18 +31,18 @@ public class BigNumArithmetic {
      * Remove possible leading zeroes that token may contain.
      * 
      * @param token
-     * @return
+     * @return token without leading zeroes
      */
     private static String removeLeadingZeroes(String token) {
-
-        // token == 0, +, -, ^, [1 - 9]
-        if (token.length() == 1)
+        // token could be 0, +, -, ^, [1 - 9]
+        if (token.length() == 1) {
             return token;
-
+        }
+        
         int currIdx = 0;
-        for (currIdx = 0; currIdx < token.length(); currIdx++) {
+        for (; currIdx < token.length(); currIdx++) {
             // if we are in the last character of the token means all previous
-            // digits were 0's. If this last one is 0 as well, then we keep it.
+            // digits were 0's. If this last one is 0 as well, we keep it.
             if (currIdx == token.length() - 1 && token.charAt(currIdx) == '0') {
                 return "0";
             }
@@ -51,17 +51,28 @@ public class BigNumArithmetic {
                 break;
             }
         }
-
-        // if we did not reach the end of the token then there are
+        
+        // If we get here then we have not reach the end of the token, there are
         // digits different from 0 starting from the index currIdx.
-        StringBuilder trimmedToken = new StringBuilder("");
-        for (int i = currIdx; i < token.length(); i++) {
-            trimmedToken.append(token.charAt(i));
-        }
-        return trimmedToken.toString();
+        
+        return token.substring(currIdx);
     }
+    
+    
+    public static int getInteger(SinglyLinkedListObj linkedListNum) {
+        SinglyLinkedListObj.ListNode currNode = linkedListNum.getHead();
+        int generatedNum = 0;
+        StringBuilder numStr = new StringBuilder("");
 
+        while (currNode != null) {
+            numStr.insert(0, (Integer)currNode.getValue());
+            currNode = currNode.getNext();
+        }
 
+        return Integer.valueOf(numStr.toString());
+    }
+    
+    
     private static SinglyLinkedListObj add(
         SinglyLinkedListObj num1,
         SinglyLinkedListObj num2) {
@@ -204,20 +215,6 @@ public class BigNumArithmetic {
         }
         
         return result;
-    }
-
-
-    public static int getInteger(SinglyLinkedListObj linkedListNum) {
-        SinglyLinkedListObj.ListNode currNode = linkedListNum.getHead();
-        int generatedNum = 0;
-        StringBuilder numStr = new StringBuilder("");
-
-        while (currNode != null) {
-            numStr.insert(0, (Integer)currNode.getValue());
-            currNode = currNode.getNext();
-        }
-
-        return Integer.valueOf(numStr.toString());
     }
 
 
