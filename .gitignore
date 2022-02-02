@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ~*
 ._*
 .TemporaryItems
@@ -29,3 +30,6 @@ hs_error_pid*
 =======
 >>>>>>> branch 'master' of https://web-cat.cs.vt.edu/Web-CAT/WebObjects/Web-CAT.woa/git/StudentProject/81384559-96aa-4538-a230-85ac6ca67af1
 /bin/
+=======
+/.metadata/
+>>>>>>> 905669d (second commit)
