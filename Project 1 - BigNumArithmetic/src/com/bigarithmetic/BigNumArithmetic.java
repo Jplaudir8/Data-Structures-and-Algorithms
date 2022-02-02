@@ -1,6 +1,8 @@
 package com.bigarithmetic;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -64,13 +66,13 @@ public class BigNumArithmetic {
         SinglyLinkedListObj num1,
         SinglyLinkedListObj num2) {
 
-        SinglyLinkedListObj.ListNode currN1 = num1.head;
-        SinglyLinkedListObj.ListNode currN2 = num2.head;
+        SinglyLinkedListObj.ListNode currN1 = num1.getHead();
+        SinglyLinkedListObj.ListNode currN2 = num2.getHead();
         SinglyLinkedListObj result = new SinglyLinkedListObj();
         int carry = 0;
         while (currN1 != null || currN2 != null) {
-            int n1 = currN1 != null ? (Integer)currN1.value : 0;
-            int n2 = currN2 != null ? (Integer)currN2.value : 0;
+            int n1 = currN1 != null ? (Integer)currN1.getValue() : 0;
+            int n2 = currN2 != null ? (Integer)currN2.getValue() : 0;
             int n3 = n1 + n2 + carry;
             carry = n3 / 10; // getting possible carry
             result.addLast(n3 % 10); // adding unit
@@ -91,8 +93,8 @@ public class BigNumArithmetic {
     private static SinglyLinkedListObj multiply(
         SinglyLinkedListObj num1,
         SinglyLinkedListObj num2) {
-        SinglyLinkedListObj.ListNode currN1 = num1.head;
-        SinglyLinkedListObj.ListNode currN2 = num2.head;
+        SinglyLinkedListObj.ListNode currN1 = num1.getHead();
+        SinglyLinkedListObj.ListNode currN2 = num2.getHead();
         SinglyLinkedListObj result = new SinglyLinkedListObj(0);
         int rowNumber = 0;
 
@@ -112,8 +114,8 @@ public class BigNumArithmetic {
             
             // multiply currN1 digit with every digit of the other operand
             while (dummyN2 != null) {
-                int n1 = (Integer)currN1.value;
-                int n2 = (Integer)dummyN2.value;
+                int n1 = (Integer)currN1.getValue();
+                int n2 = (Integer)dummyN2.getValue();
                                 
                 int n3 = n1 * n2 + carry;
                 carry = n3 / 10;
@@ -167,7 +169,7 @@ public class BigNumArithmetic {
     }
 
 
-    public static SinglyLinkedListObj pow(
+    private static SinglyLinkedListObj pow(
         SinglyLinkedListObj num1,
         SinglyLinkedListObj num2) {
 
@@ -206,12 +208,12 @@ public class BigNumArithmetic {
 
 
     public static int getInteger(SinglyLinkedListObj linkedListNum) {
-        SinglyLinkedListObj.ListNode currNode = linkedListNum.head;
+        SinglyLinkedListObj.ListNode currNode = linkedListNum.getHead();
         int generatedNum = 0;
         StringBuilder numStr = new StringBuilder("");
 
         while (currNode != null) {
-            numStr.insert(0, (Integer)currNode.value);
+            numStr.insert(0, (Integer)currNode.getValue());
             currNode = currNode.getNext();
         }
 
@@ -258,6 +260,10 @@ public class BigNumArithmetic {
                         break;
                     case "^":
                         result = pow(numB, numA);
+                        break;
+                    default:
+                        // no other operator
+                        break;
                 }
 
                 numsStack.push(result);
@@ -276,6 +282,8 @@ public class BigNumArithmetic {
 
     public static void scanFile(String filename) {
         try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("/Users/joanperezlozano/Downloads/RPNOutput.txt"));
+            // BufferedWriter bw = new BufferedWriter(new FileWriter("../outputFiles/RPNOutput.txt"));
             Scanner sc = new Scanner(new File(filename));// Create our new
                                                          // scanner
             while (sc.hasNextLine()) { // While the scanner has information to
@@ -286,8 +294,12 @@ public class BigNumArithmetic {
                 // separate every element and store them in array
                 String[] currentLineArr = currentLine.trim().split(" +");
                 String lineResult = calculateLine(currentLineArr);
+                
+                bw.write(lineResult + "\n");
+                
                 System.out.println(lineResult);
             }
+            bw.close();
         }
         catch (Exception e) {
             e.printStackTrace();

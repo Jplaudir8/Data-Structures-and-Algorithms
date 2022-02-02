@@ -3,7 +3,7 @@ package com.bigarithmetic;
 public class SinglyLinkedListObj {
     public class ListNode {
 
-        public Object value;
+        private Object value;
         private ListNode next;
 
         public ListNode(Object value) {
@@ -20,9 +20,13 @@ public class SinglyLinkedListObj {
         public ListNode getNext() {
             return this.next;
         }
+        
+        public Object getValue() {
+            return this.value;
+        }
     }
 
-    public ListNode head;
+    private ListNode head;
     private int size;
     
     public SinglyLinkedListObj() {
@@ -88,7 +92,11 @@ public class SinglyLinkedListObj {
         return this.size;
     }
     
-    // TODO Might need to implement toString() method
+    
+    public ListNode getHead() {
+        return this.head;
+    }
+    
     /**
      * String Form of a LinkedList
      *

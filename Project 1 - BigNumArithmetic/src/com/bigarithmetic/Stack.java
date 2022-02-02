@@ -1,8 +1,8 @@
 package com.bigarithmetic;
 
 public class Stack {
-    public SinglyLinkedListObj stack;
-    public int size;
+    private SinglyLinkedListObj stack;
+    private int size;
     public static final int MAX_SIZE = Integer.MAX_VALUE;
 
     public Stack() {
@@ -41,7 +41,7 @@ public class Stack {
 
     public Object peek() {
         if (this.size != 0) {
-            return this.stack.head.value;
+            return this.stack.getHead().getValue();
         }
         else {
             return null;
