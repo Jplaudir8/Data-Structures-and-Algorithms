@@ -1,12 +1,12 @@
 package com.bigarithmetic;
 
-public class Stack {
-    private SinglyLinkedListObj stack;
+public class Stack<U> {
+    private SinglyLinkedListObj<U> stack;
     private int size;
     public static final int MAX_SIZE = Integer.MAX_VALUE;
 
     public Stack() {
-        this.stack = new SinglyLinkedListObj();
+        this.stack = new SinglyLinkedListObj<U>();
         this.size = 0;
     }
 
@@ -16,7 +16,7 @@ public class Stack {
     }
 
 
-    public void push(SinglyLinkedListObj newValue) {
+    public void push(U newValue) {
         if (this.size < MAX_SIZE) {
             this.stack.addFirst(newValue);
             this.size++;
@@ -27,9 +27,9 @@ public class Stack {
     }
 
 
-    public Object pop() {
+    public U pop() {
         if (this.size != 0) {
-            Object topValue = this.stack.removeFirst();
+            U topValue = this.stack.removeFirst();
             this.size--;
             return topValue;
         }
@@ -39,7 +39,7 @@ public class Stack {
     }
 
 
-    public Object peek() {
+    public U peek() {
         if (this.size != 0) {
             return this.stack.getHead().getValue();
         }

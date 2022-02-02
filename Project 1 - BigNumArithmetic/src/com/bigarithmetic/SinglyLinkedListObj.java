@@ -1,32 +1,32 @@
 package com.bigarithmetic;
 
-public class SinglyLinkedListObj {
-    public class ListNode {
+public class SinglyLinkedListObj<T> {
+    public class ListNode<T> {
 
-        private Object value;
-        private ListNode next;
+        private T value;
+        private ListNode<T> next;
 
-        public ListNode(Object value) {
+        public ListNode(T value) {
             this.value = value;
             this.next = null;
         }
 
 
-        public void setNext(ListNode next) {
+        public void setNext(ListNode<T> next) {
             this.next = next;
         }
 
 
-        public ListNode getNext() {
+        public ListNode<T> getNext() {
             return this.next;
         }
         
-        public Object getValue() {
+        public T getValue() {
             return this.value;
         }
     }
 
-    private ListNode head;
+    private ListNode<T> head;
     private int size;
     
     public SinglyLinkedListObj() {
@@ -34,7 +34,7 @@ public class SinglyLinkedListObj {
         this.size = 0;
     }
 
-    public SinglyLinkedListObj(Object newVal) {
+    public SinglyLinkedListObj(T newVal) {
         this.head = new ListNode(newVal);
         this.size = 1;
     }
@@ -44,9 +44,9 @@ public class SinglyLinkedListObj {
      * @param newVal
      *            : new value to be added
      */
-    public void addFirst(Object newVal) {
-        ListNode newNode = new ListNode(newVal);
-        ListNode oldHead = this.head;
+    public void addFirst(T newVal) {
+        ListNode<T> newNode = new ListNode(newVal);
+        ListNode<T> oldHead = this.head;
         this.head = newNode;
 
         if (oldHead != null)
@@ -61,9 +61,9 @@ public class SinglyLinkedListObj {
      * @param newVal
      *            : new value to be added
      */
-    public void addLast(Object newVal) {
-        ListNode newNode = new ListNode(newVal);
-        ListNode tail = this.head;
+    public void addLast(T newVal) {
+        ListNode<T> newNode = new ListNode(newVal);
+        ListNode<T> tail = this.head;
 
         if (tail == null) {
             this.head = newNode;
@@ -78,8 +78,8 @@ public class SinglyLinkedListObj {
     }
 
 
-    public Object removeFirst() {
-        ListNode removedHead = this.head;
+    public T removeFirst() {
+        ListNode<T> removedHead = this.head;
         if (removedHead == null)
             return null;
         
@@ -93,23 +93,44 @@ public class SinglyLinkedListObj {
     }
     
     
-    public ListNode getHead() {
+    public ListNode<T> getHead() {
         return this.head;
     }
+    
     
     /**
      * String Form of a LinkedList
      *
      * @return A String in the form of {} returned.
      */
+//    @Override
+//    public String toString() {
+//        StringBuilder completeNumber = new StringBuilder("");
+//        ListNode currNode = this.head;
+//        while (currNode != null) {
+//            completeNumber.insert(0, (Integer) currNode.value);
+//            currNode = currNode.getNext();
+//        }
+//        return completeNumber.toString();
+//    }
+    
+    
     @Override
     public String toString() {
-        StringBuilder completeNumber = new StringBuilder("");
+        SinglyLinkedListObj<Integer> reversedList = new SinglyLinkedListObj();
         ListNode currNode = this.head;
         while (currNode != null) {
-            completeNumber.insert(0, (Integer) currNode.value);
+            reversedList.addFirst((Integer)currNode.value);
             currNode = currNode.getNext();
         }
-        return completeNumber.toString();
+        
+        // traverse linked list to print
+        String numberStr = "";
+        currNode = reversedList.head;
+        while (currNode != null) {
+            numberStr += currNode.value;
+            currNode = currNode.getNext();
+        }
+        return numberStr;
     }
 }
