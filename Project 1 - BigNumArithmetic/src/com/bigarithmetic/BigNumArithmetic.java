@@ -67,16 +67,19 @@ public class BigNumArithmetic {
     public static int getInteger(SinglyLinkedListObj<Integer> linkedListNum) {
         SinglyLinkedListObj<Integer>.ListNode<Integer> currNode = linkedListNum.getHead();
         int generatedNum = 0;
-        StringBuilder numStr = new StringBuilder("");
+        String numStr = "";
+        String reversedNumStr = "";
         
         while (currNode != null) {
-            numStr.insert(0, (Integer)currNode.getValue());
+            reversedNumStr += ""+(Integer) currNode.getValue();
             currNode = currNode.getNext();
         }
-
-        return Integer.valueOf(numStr.toString());
+        
+        for (int i = 0; i < reversedNumStr.length(); i++) {
+            numStr += reversedNumStr.charAt(i);
+        }
+        return Integer.valueOf(numStr);
     }
-    
     
     private static SinglyLinkedListObj<Integer> add(
         SinglyLinkedListObj<Integer> num1,
@@ -229,16 +232,16 @@ public class BigNumArithmetic {
         if (!operationIsValid(operationLine)) {
             // invalid operation so just remove leading zeroes and print
             // intended operation
-            StringBuilder currentToken = new StringBuilder("");
+            String currentToken = "";
             for (int i = 0; i < operationLine.length; i++) {
-                currentToken.append(removeLeadingZeroes(operationLine[i]) + " ");
+                currentToken += removeLeadingZeroes(operationLine[i]);
             }
-            return currentToken.toString() + "=";
+            return currentToken + "=";
         }
 
-        // create a stack and StringBuilder to be used for printing in file
+        // create a stack and string to be used for printing
         Stack numsStack = new Stack();
-        StringBuilder resultPrint = new StringBuilder("");
+        String resultPrint = "";
 
         for (int i = 0; i < operationLine.length; i++) {
             // if current token is an operator then pop 2 elements from stack,
@@ -246,7 +249,7 @@ public class BigNumArithmetic {
             // else its a number so push into stack
             String currToken = removeLeadingZeroes(operationLine[i]);
 
-            resultPrint.append(currToken + " ");
+            resultPrint += currToken + " ";
 
             if (currToken.equals("+") || currToken.equals("*") || currToken
                 .equals("^")) {
@@ -277,15 +280,13 @@ public class BigNumArithmetic {
             }
         }
 
-        resultPrint.append("= " + removeLeadingZeroes(numsStack.pop().toString()));
-        return resultPrint.toString();
+        resultPrint += "= " + removeLeadingZeroes(numsStack.pop().toString());
+        return resultPrint;
     }
 
 
     public static void scanFile(String filename) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("RPNOutput.txt"));
-            // BufferedWriter bw = new BufferedWriter(new FileWriter("../outputFiles/RPNOutput.txt"));
             Scanner sc = new Scanner(new File(filename));// Create our new
                                                          // scanner
             while (sc.hasNextLine()) { // While the scanner has information to
@@ -297,11 +298,8 @@ public class BigNumArithmetic {
                 String[] currentLineArr = currentLine.trim().split(" +");
                 String lineResult = calculateLine(currentLineArr);
                 
-                bw.write(lineResult + "\n");
-                
                 System.out.println(lineResult);
             }
-            bw.close();
         }
         catch (Exception e) {
             e.printStackTrace();
