@@ -68,7 +68,7 @@ public class SinglyLinkedList<T> {
         /**
          * Returns value from this ListNode object.
          *
-         * @return value this ListNode's value.
+         * @return this ListNode's value.
          */
         public T getValue() {
             return this.value;
@@ -149,7 +149,7 @@ public class SinglyLinkedList<T> {
     /**
      * Removes current head of this singly linked list.
      * 
-     * @return value first value of this singly linked list that has been
+     * @return first value of this singly linked list that has been
      *         removed.
      */
     public T removeFirst() {
@@ -166,7 +166,7 @@ public class SinglyLinkedList<T> {
     /**
      * Returns current size of this singly linked list.
      * 
-     * @return size size of this singly linked list.
+     * @return size of this singly linked list.
      */
     public int getSize() {
         return this.size;
@@ -176,7 +176,7 @@ public class SinglyLinkedList<T> {
     /**
      * Returns current head of this singly linked list.
      * 
-     * @return head head node of this singly linked list.
+     * @return head node of this singly linked list.
      */
     public ListNode<T> getHead() {
         return this.head;
@@ -186,7 +186,7 @@ public class SinglyLinkedList<T> {
     /**
      * Returns a string representation of this singly linked list content.
      *
-     * @return numberStr string form of this singly linked list.
+     * @return string form of this singly linked list.
      */
     @Override
     public String toString() {

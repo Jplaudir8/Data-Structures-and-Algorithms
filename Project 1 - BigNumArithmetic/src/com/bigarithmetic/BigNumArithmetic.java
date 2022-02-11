@@ -25,20 +25,30 @@ import java.util.Scanner;
 // during the discussion. I have violated neither the spirit nor
 // letter of this restriction.
 
+/**
+ * Represents a calculator of integer numbers that can have a size bigger than
+ * normal 32-bit and 64-bit integers. Possible operations that it can hold are:
+ * Addition, Multiplication and Exponentiation.
+ *
+ * @author Joan Piayet Perez Lozano (joanperezl)
+ * @author Raena Rahimi Bafrani (raenar)
+ * @version Jan 28, 2022
+ * @param <T>
+ */
 public class BigNumArithmetic {
 
     /**
-     * Remove possible leading zeroes that token may contain.
+     * Removes possible leading zeroes that token may contain.
      * 
      * @param token
-     * @return token without leading zeroes
+     * @return token without leading zeroes.
      */
     private static String removeLeadingZeroes(String token) {
         // token could be 0, +, -, ^, [1 - 9]
         if (token.length() == 1) {
             return token;
         }
-        
+
         int currIdx = 0;
         for (; currIdx < token.length(); currIdx++) {
             // if we are in the last character of the token means all previous
@@ -51,35 +61,39 @@ public class BigNumArithmetic {
                 break;
             }
         }
-        
+
         // If we get here then we have not reach the end of the token, there are
         // digits different from 0 starting from the index currIdx.
-        
+
         return token.substring(currIdx);
     }
-    
+
+
     /**
      * Obtain integer form of SinglyLinkedList object. This method is only
      * used when we are sure linkedListNum can be held in a 32-bit integer.
+     * 
      * @param linkedListNum
      * @return 32-bit integer form of linkedListNum
      */
     public static int getInteger(SinglyLinkedList<Integer> linkedListNum) {
-        SinglyLinkedList<Integer>.ListNode<Integer> currNode = linkedListNum.getHead();
+        SinglyLinkedList<Integer>.ListNode<Integer> currNode = linkedListNum
+            .getHead();
         String numStr = "";
         String reversedNumStr = "";
-        
+
         while (currNode != null) {
-            reversedNumStr += ""+(Integer) currNode.getValue();
+            reversedNumStr += "" + (Integer)currNode.getValue();
             currNode = currNode.getNext();
         }
-        
+
         for (int i = 0; i < reversedNumStr.length(); i++) {
             numStr += reversedNumStr.charAt(i);
         }
         return Integer.valueOf(numStr);
     }
-    
+
+
     private static SinglyLinkedList<Integer> add(
         SinglyLinkedList<Integer> num1,
         SinglyLinkedList<Integer> num2) {
@@ -117,24 +131,25 @@ public class BigNumArithmetic {
         int rowNumber = 0;
 
         // TODO test with special cases when multiple a number by 0 or by 1
-        
+
         while (currN1 != null) {
 
-            SinglyLinkedList<Integer> currProductRes = new SinglyLinkedList<Integer>();
+            SinglyLinkedList<Integer> currProductRes =
+                new SinglyLinkedList<Integer>();
             int carry = 0;
 
             // generate zeros depending in which row we are
             for (int i = 0; i < rowNumber; i++) {
                 currProductRes.addFirst(0);
             }
-            
+
             SinglyLinkedList<Integer>.ListNode<Integer> dummyN2 = currN2;
-            
+
             // multiply currN1 digit with every digit of the other operand
             while (dummyN2 != null) {
                 int n1 = (Integer)currN1.getValue();
                 int n2 = (Integer)dummyN2.getValue();
-                                
+
                 int n3 = n1 * n2 + carry;
                 carry = n3 / 10;
                 currProductRes.addLast(n3 % 10);
@@ -215,12 +230,12 @@ public class BigNumArithmetic {
         for (int i = 2; i <= exponent; i++) {
             result = multiply(result, squaredNum1);
         }
-        
+
         // if exponent is odd we need to multiply by num1 as part of the formula
         if (exponent % 2 != 0) {
             result = multiply(result, num1);
         }
-        
+
         return result;
     }
 
@@ -252,9 +267,12 @@ public class BigNumArithmetic {
 
             if (currToken.equals("+") || currToken.equals("*") || currToken
                 .equals("^")) {
-                SinglyLinkedList<Integer> numA = (SinglyLinkedList<Integer>)numsStack.pop();
-                SinglyLinkedList<Integer> numB = (SinglyLinkedList<Integer>)numsStack.pop();
-                SinglyLinkedList<Integer> result = new SinglyLinkedList<Integer>();
+                SinglyLinkedList<Integer> numA =
+                    (SinglyLinkedList<Integer>)numsStack.pop();
+                SinglyLinkedList<Integer> numB =
+                    (SinglyLinkedList<Integer>)numsStack.pop();
+                SinglyLinkedList<Integer> result =
+                    new SinglyLinkedList<Integer>();
                 switch (currToken) {
                     case "+":
                         result = add(numA, numB);
@@ -296,7 +314,7 @@ public class BigNumArithmetic {
                 // separate every element and store them in array
                 String[] currentLineArr = currentLine.trim().split(" +");
                 String lineResult = calculateLine(currentLineArr);
-                
+
                 System.out.println(lineResult);
             }
         }
