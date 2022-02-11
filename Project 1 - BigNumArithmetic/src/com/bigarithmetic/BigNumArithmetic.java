@@ -59,14 +59,13 @@ public class BigNumArithmetic {
     }
     
     /**
-     * Obtain integer form of SinglyLinkedListObj object. This method is only
+     * Obtain integer form of SinglyLinkedList object. This method is only
      * used when we are sure linkedListNum can be held in a 32-bit integer.
      * @param linkedListNum
      * @return 32-bit integer form of linkedListNum
      */
-    public static int getInteger(SinglyLinkedListObj<Integer> linkedListNum) {
-        SinglyLinkedListObj<Integer>.ListNode<Integer> currNode = linkedListNum.getHead();
-        int generatedNum = 0;
+    public static int getInteger(SinglyLinkedList<Integer> linkedListNum) {
+        SinglyLinkedList<Integer>.ListNode<Integer> currNode = linkedListNum.getHead();
         String numStr = "";
         String reversedNumStr = "";
         
@@ -81,13 +80,13 @@ public class BigNumArithmetic {
         return Integer.valueOf(numStr);
     }
     
-    private static SinglyLinkedListObj<Integer> add(
-        SinglyLinkedListObj<Integer> num1,
-        SinglyLinkedListObj<Integer> num2) {
+    private static SinglyLinkedList<Integer> add(
+        SinglyLinkedList<Integer> num1,
+        SinglyLinkedList<Integer> num2) {
 
-        SinglyLinkedListObj<Integer>.ListNode<Integer> currN1 = num1.getHead();
-        SinglyLinkedListObj<Integer>.ListNode<Integer> currN2 = num2.getHead();
-        SinglyLinkedListObj<Integer> result = new SinglyLinkedListObj<Integer>();
+        SinglyLinkedList<Integer>.ListNode<Integer> currN1 = num1.getHead();
+        SinglyLinkedList<Integer>.ListNode<Integer> currN2 = num2.getHead();
+        SinglyLinkedList<Integer> result = new SinglyLinkedList<Integer>();
         int carry = 0;
         while (currN1 != null || currN2 != null) {
             int n1 = currN1 != null ? currN1.getValue() : 0;
@@ -109,19 +108,19 @@ public class BigNumArithmetic {
     }
 
 
-    private static SinglyLinkedListObj<Integer> multiply(
-        SinglyLinkedListObj<Integer> num1,
-        SinglyLinkedListObj<Integer> num2) {
-        SinglyLinkedListObj<Integer>.ListNode<Integer> currN1 = num1.getHead();
-        SinglyLinkedListObj<Integer>.ListNode<Integer> currN2 = num2.getHead();
-        SinglyLinkedListObj<Integer> result = new SinglyLinkedListObj<Integer>(0);
+    private static SinglyLinkedList<Integer> multiply(
+        SinglyLinkedList<Integer> num1,
+        SinglyLinkedList<Integer> num2) {
+        SinglyLinkedList<Integer>.ListNode<Integer> currN1 = num1.getHead();
+        SinglyLinkedList<Integer>.ListNode<Integer> currN2 = num2.getHead();
+        SinglyLinkedList<Integer> result = new SinglyLinkedList<Integer>(0);
         int rowNumber = 0;
 
         // TODO test with special cases when multiple a number by 0 or by 1
         
         while (currN1 != null) {
 
-            SinglyLinkedListObj<Integer> currProductRes = new SinglyLinkedListObj<Integer>();
+            SinglyLinkedList<Integer> currProductRes = new SinglyLinkedList<Integer>();
             int carry = 0;
 
             // generate zeros depending in which row we are
@@ -129,7 +128,7 @@ public class BigNumArithmetic {
                 currProductRes.addFirst(0);
             }
             
-            SinglyLinkedListObj<Integer>.ListNode<Integer> dummyN2 = currN2;
+            SinglyLinkedList<Integer>.ListNode<Integer> dummyN2 = currN2;
             
             // multiply currN1 digit with every digit of the other operand
             while (dummyN2 != null) {
@@ -155,8 +154,8 @@ public class BigNumArithmetic {
     }
 
 
-    private static SinglyLinkedListObj<Integer> getLinkedList(String currToken) {
-        SinglyLinkedListObj<Integer> newNumber = new SinglyLinkedListObj<Integer>();
+    private static SinglyLinkedList<Integer> getLinkedList(String currToken) {
+        SinglyLinkedList<Integer> newNumber = new SinglyLinkedList<Integer>();
         for (int i = currToken.length() - 1; i >= 0; i--) {
             String currDigit = String.valueOf(currToken.charAt(i));
             newNumber.addLast(Integer.valueOf(currDigit));
@@ -188,19 +187,19 @@ public class BigNumArithmetic {
     }
 
 
-    private static SinglyLinkedListObj<Integer> pow(
-        SinglyLinkedListObj<Integer> num1,
-        SinglyLinkedListObj<Integer> num2) {
+    private static SinglyLinkedList<Integer> pow(
+        SinglyLinkedList<Integer> num1,
+        SinglyLinkedList<Integer> num2) {
 
         if (getInteger(num2) == 0) {
-            return new SinglyLinkedListObj<Integer>((Integer)1);
+            return new SinglyLinkedList<Integer>((Integer)1);
         }
 
         if (getInteger(num2) == 1) {
             return num1;
         }
 
-        SinglyLinkedListObj<Integer> squaredNum1 = multiply(num1, num1);
+        SinglyLinkedList<Integer> squaredNum1 = multiply(num1, num1);
 
         // generate exponent
         int exponent = getInteger(num2);
@@ -211,7 +210,7 @@ public class BigNumArithmetic {
             exponent = ((exponent - 1) / 2);
         }
 
-        SinglyLinkedListObj<Integer> result = squaredNum1;
+        SinglyLinkedList<Integer> result = squaredNum1;
 
         for (int i = 2; i <= exponent; i++) {
             result = multiply(result, squaredNum1);
@@ -253,9 +252,9 @@ public class BigNumArithmetic {
 
             if (currToken.equals("+") || currToken.equals("*") || currToken
                 .equals("^")) {
-                SinglyLinkedListObj<Integer> numA = (SinglyLinkedListObj<Integer>)numsStack.pop();
-                SinglyLinkedListObj<Integer> numB = (SinglyLinkedListObj<Integer>)numsStack.pop();
-                SinglyLinkedListObj<Integer> result = new SinglyLinkedListObj<Integer>();
+                SinglyLinkedList<Integer> numA = (SinglyLinkedList<Integer>)numsStack.pop();
+                SinglyLinkedList<Integer> numB = (SinglyLinkedList<Integer>)numsStack.pop();
+                SinglyLinkedList<Integer> result = new SinglyLinkedList<Integer>();
                 switch (currToken) {
                     case "+":
                         result = add(numA, numB);
@@ -275,7 +274,7 @@ public class BigNumArithmetic {
             }
             else {
                 // push number found
-                SinglyLinkedListObj<Integer> newNum = getLinkedList(currToken);
+                SinglyLinkedList<Integer> newNum = getLinkedList(currToken);
                 numsStack.push(newNum);
             }
         }

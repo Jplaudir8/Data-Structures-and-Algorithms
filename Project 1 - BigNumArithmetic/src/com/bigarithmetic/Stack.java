@@ -1,12 +1,24 @@
 package com.bigarithmetic;
 
+/**
+ * Represents an implementation of a stack data structure.
+ *
+ * @author Joan Piayet Perez Lozano (joanperezl)
+ * @author Raena Rahimi Bafrani (raenar)
+ * @version Jan 28, 2022
+ * @param <T>
+ */
 public class Stack<U> {
-    private SinglyLinkedListObj<U> stack;
+    
+    /**
+     * 
+     */
+    private SinglyLinkedList<U> stack;
     private int size;
     public static final int MAX_SIZE = Integer.MAX_VALUE;
 
     public Stack() {
-        this.stack = new SinglyLinkedListObj<U>();
+        this.stack = new SinglyLinkedList<U>();
         this.size = 0;
     }
 
