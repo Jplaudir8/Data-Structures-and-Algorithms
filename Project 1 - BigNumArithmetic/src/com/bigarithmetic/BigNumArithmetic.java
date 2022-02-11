@@ -41,6 +41,7 @@ public class BigNumArithmetic {
      * Removes possible leading zeroes that token may contain.
      * 
      * @param token
+     *            token to be modified.
      * @return token without leading zeroes.
      */
     private static String removeLeadingZeroes(String token) {
@@ -70,10 +71,12 @@ public class BigNumArithmetic {
 
 
     /**
-     * Obtain integer form of SinglyLinkedList object. This method is only
+     * Returns integer form of SinglyLinkedList object. This method is only
      * used when we are sure linkedListNum can be held in a 32-bit integer.
      * 
      * @param linkedListNum
+     *            linked list object from which integer form is going to be
+     *            obtained.
      * @return 32-bit integer form of linkedListNum
      */
     public static int getInteger(SinglyLinkedList<Integer> linkedListNum) {
@@ -94,6 +97,16 @@ public class BigNumArithmetic {
     }
 
 
+    /**
+     * Adds integer representation of num1 and num2 linked lists and returns the
+     * result as another singly linked list instance.
+     * 
+     * @param num1
+     *            first operand to be added.
+     * @param num2
+     *            second operand to be added.
+     * @return result of the addition of num1 and num2.
+     */
     private static SinglyLinkedList<Integer> add(
         SinglyLinkedList<Integer> num1,
         SinglyLinkedList<Integer> num2) {
@@ -122,6 +135,16 @@ public class BigNumArithmetic {
     }
 
 
+    /**
+     * Multiplies the integer representation of num1 and num2 linked lists and
+     * returns the product.
+     * 
+     * @param num1
+     *            first operand to be multiplied. (Multiplicand).
+     * @param num2
+     *            second operand to be multiplied. (Multiplier).
+     * @return the product of num1 and num2.
+     */
     private static SinglyLinkedList<Integer> multiply(
         SinglyLinkedList<Integer> num1,
         SinglyLinkedList<Integer> num2) {
@@ -169,6 +192,13 @@ public class BigNumArithmetic {
     }
 
 
+    /**
+     * Returns linked list form of the given token.
+     * 
+     * @param currToken
+     *            token to be casted to a Singly Linked List.
+     * @return linked list form of current token.
+     */
     private static SinglyLinkedList<Integer> getLinkedList(String currToken) {
         SinglyLinkedList<Integer> newNumber = new SinglyLinkedList<Integer>();
         for (int i = currToken.length() - 1; i >= 0; i--) {
@@ -185,6 +215,13 @@ public class BigNumArithmetic {
 
 
     // Make sure number of operators = number of operands - 1
+    /**
+     * Checks whether an intended operation is valid.
+     * 
+     * @param operationArray
+     *            operation line segmented in an array of String values.
+     * @return true or false whether the operation is valid or not.
+     */
     private static boolean operationIsValid(String[] operationArray) {
         int numOfOperands = 0;
         int numOfOperators = 0;
@@ -202,6 +239,15 @@ public class BigNumArithmetic {
     }
 
 
+    /**
+     * Calculates exponentiation of num1 raised to num2 and returns the result.
+     * 
+     * @param num1
+     *            base of the calculation.
+     * @param num2
+     *            exponent of the calculation.
+     * @return result of performing exponentiation
+     */
     private static SinglyLinkedList<Integer> pow(
         SinglyLinkedList<Integer> num1,
         SinglyLinkedList<Integer> num2) {
@@ -240,6 +286,14 @@ public class BigNumArithmetic {
     }
 
 
+    /**
+     * Performs calculation of current intended operation of numbers.
+     * 
+     * @param operationLine
+     *            operation line segmented in an array of String values.
+     * @return intended operation with or without result, based on if it is
+     *         valid or not, respectively.
+     */
     public static String calculateLine(String[] operationLine) {
         // First validate that it will be possible to do the math.
 
@@ -301,7 +355,10 @@ public class BigNumArithmetic {
         return resultPrint;
     }
 
-
+    /**
+     * Scans file to be calculated.
+     * @param filename file path to be used for calculation.
+     */
     public static void scanFile(String filename) {
         try {
             Scanner sc = new Scanner(new File(filename));// Create our new
