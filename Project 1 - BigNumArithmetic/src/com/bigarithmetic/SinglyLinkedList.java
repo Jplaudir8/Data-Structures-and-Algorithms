@@ -206,4 +206,39 @@ public class SinglyLinkedList<T> {
         }
         return numberStr;
     }
+    
+    /**
+     * Returns True if both LinkedLists contain the same elements.
+     * 
+     * @return T/F based upon if they're equal or not.
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (this.getClass() == obj.getClass()) {
+            SinglyLinkedList<T> other = (SinglyLinkedList<T>)obj;
+            if (other.getSize() == this.getSize()) {
+                ListNode<T> current = head.getNext();
+                ListNode<T> otherCurrent = other.head.getNext();
+                while (current != null) {
+                    if (!current.value.equals(otherCurrent.value)) {
+                        return false;
+                    }
+                    current = current.getNext();
+                    otherCurrent = otherCurrent.getNext();
+                }
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

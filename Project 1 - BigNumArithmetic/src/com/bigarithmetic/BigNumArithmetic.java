@@ -79,20 +79,27 @@ public class BigNumArithmetic {
      *            obtained.
      * @return 32-bit integer form of linkedListNum
      */
-    public static int getInteger(SinglyLinkedList<Integer> linkedListNum) {
+    private static int getInteger(SinglyLinkedList<Integer> linkedListNum) {
         SinglyLinkedList<Integer>.ListNode<Integer> currNode = linkedListNum
             .getHead();
         String numStr = "";
         String reversedNumStr = "";
-
+        // 0 -> 1
+        // c  
         while (currNode != null) {
             reversedNumStr += "" + (Integer)currNode.getValue();
             currNode = currNode.getNext();
         }
-
-        for (int i = 0; i < reversedNumStr.length(); i++) {
+        
+        
+        
+//        for (int i = 0; i < reversedNumStr.length(); i++) {
+//            numStr += reversedNumStr.charAt(i);
+//        }
+        for (int i = reversedNumStr.length() - 1; i >= 0; i--) {
             numStr += reversedNumStr.charAt(i);
         }
+//        System.out.println("from getInteger(): "+Integer.valueOf(numStr));
         return Integer.valueOf(numStr);
     }
 
@@ -107,7 +114,7 @@ public class BigNumArithmetic {
      *            second operand to be added.
      * @return result of the addition of num1 and num2.
      */
-    private static SinglyLinkedList<Integer> add(
+    public static SinglyLinkedList<Integer> add(
         SinglyLinkedList<Integer> num1,
         SinglyLinkedList<Integer> num2) {
 
@@ -145,7 +152,7 @@ public class BigNumArithmetic {
      *            second operand to be multiplied. (Multiplier).
      * @return the product of num1 and num2.
      */
-    private static SinglyLinkedList<Integer> multiply(
+    public static SinglyLinkedList<Integer> multiply(
         SinglyLinkedList<Integer> num1,
         SinglyLinkedList<Integer> num2) {
         SinglyLinkedList<Integer>.ListNode<Integer> currN1 = num1.getHead();
@@ -208,13 +215,7 @@ public class BigNumArithmetic {
         return newNumber;
     }
 
-    // QUESTION: Might have to add a validation that checks whether the operands
-    // are in the right places
-    // Otherwise stack could break when popping more elements than current size
-    // e.g. *2 36
-
-
-    // Make sure number of operators = number of operands - 1
+    
     /**
      * Checks whether an intended operation is valid.
      * 
@@ -222,13 +223,16 @@ public class BigNumArithmetic {
      *            operation line segmented in an array of String values.
      * @return true or false whether the operation is valid or not.
      */
-    private static boolean operationIsValid(String[] operationArray) {
+    public static boolean operationIsValid(String[] operationArray) {
         int numOfOperands = 0;
         int numOfOperators = 0;
         for (int i = 0; i < operationArray.length; i++) {
+            
             String currToken = operationArray[i];
+            
             if (currToken.equals("+") || currToken.equals("*") || currToken
                 .equals("^")) {
+                if (i == 0) return false;
                 numOfOperators++;
             }
             else {
@@ -248,7 +252,7 @@ public class BigNumArithmetic {
      *            exponent of the calculation.
      * @return result of performing exponentiation
      */
-    private static SinglyLinkedList<Integer> pow(
+    public static SinglyLinkedList<Integer> pow(
         SinglyLinkedList<Integer> num1,
         SinglyLinkedList<Integer> num2) {
 
@@ -259,28 +263,23 @@ public class BigNumArithmetic {
         if (getInteger(num2) == 1) {
             return num1;
         }
-
+        // step 1
         SinglyLinkedList<Integer> squaredNum1 = multiply(num1, num1);
-
-        // generate exponent
+        SinglyLinkedList<Integer> result = squaredNum1;
         int exponent = getInteger(num2);
         if (exponent % 2 == 0) {
             exponent /= 2;
         }
         else {
             exponent = ((exponent - 1) / 2);
-        }
-
-        SinglyLinkedList<Integer> result = squaredNum1;
+            result = multiply(result, num1);
+        }        
 
         for (int i = 2; i <= exponent; i++) {
             result = multiply(result, squaredNum1);
         }
 
         // if exponent is odd we need to multiply by num1 as part of the formula
-        if (exponent % 2 != 0) {
-            result = multiply(result, num1);
-        }
 
         return result;
     }
@@ -302,7 +301,7 @@ public class BigNumArithmetic {
             // intended operation
             String currentToken = "";
             for (int i = 0; i < operationLine.length; i++) {
-                currentToken += removeLeadingZeroes(operationLine[i]);
+                currentToken += removeLeadingZeroes(operationLine[i]) + " ";
             }
             return currentToken + "=";
         }
