@@ -30,11 +30,11 @@ import student.TestCase;
  */
 public class BigNumArithmeticTest extends TestCase {
 
+    private SinglyLinkedList<Integer> num8762;
+    private SinglyLinkedList<Integer> num97236;
+    private SinglyLinkedList<Integer> num0;
+    private SinglyLinkedList<Integer> num824;
     private SinglyLinkedList<Integer> num1;
-    private SinglyLinkedList<Integer> num2;
-    private SinglyLinkedList<Integer> num3;
-    private SinglyLinkedList<Integer> num4;
-    private SinglyLinkedList<Integer> num5;
     private SinglyLinkedList<Integer> num10;
     private SinglyLinkedList<Integer> num11;
 
@@ -44,41 +44,43 @@ public class BigNumArithmeticTest extends TestCase {
      */
     public void setUp() {
 
+        num8762 = new SinglyLinkedList<Integer>();
+        num97236 = new SinglyLinkedList<Integer>();
+        num0 = new SinglyLinkedList<Integer>();
+        num824 = new SinglyLinkedList<Integer>();
         num1 = new SinglyLinkedList<Integer>();
-        num2 = new SinglyLinkedList<Integer>();
-        num3 = new SinglyLinkedList<Integer>();
-        num4 = new SinglyLinkedList<Integer>();
-        num5 = new SinglyLinkedList<Integer>();
         num10 = new SinglyLinkedList<Integer>();
         num11 = new SinglyLinkedList<Integer>();
 
         // 8762
-        num1.addLast(2);
-        num1.addLast(6);
-        num1.addLast(7);
-        num1.addLast(8);
+        num8762.addLast(2);
+        num8762.addLast(6);
+        num8762.addLast(7);
+        num8762.addLast(8);
 
         // 97236
-        num2.addLast(6);
-        num2.addLast(3);
-        num2.addLast(2);
-        num2.addLast(7);
-        num2.addLast(9);
+        num97236.addLast(6);
+        num97236.addLast(3);
+        num97236.addLast(2);
+        num97236.addLast(7);
+        num97236.addLast(9);
 
         // 0
-        num3.addLast(0);
+        num0.addLast(0);
 
         // 824
-        num4.addLast(4);
-        num4.addLast(2);
-        num4.addLast(8);
+        num824.addLast(4);
+        num824.addLast(2);
+        num824.addLast(8);
 
         // 1
-        num5.addLast(1);
+        num1.addLast(1);
 
+        // 10
         num10.addLast(0);
         num10.addLast(1);
 
+        // 11
         num11.addLast(1);
         num11.addLast(1);
 
@@ -181,9 +183,9 @@ public class BigNumArithmeticTest extends TestCase {
         expectedRes2.addLast(9);
 
         // when num1 is larger in digits
-        assertTrue(BigNumArithmetic.add(num1, num2).equals(expectedRes1));
+        assertTrue(BigNumArithmetic.add(num8762, num97236).equals(expectedRes1));
         // when num4 is larger in digits
-        assertTrue(BigNumArithmetic.add(num1, num4).equals(expectedRes2));
+        assertTrue(BigNumArithmetic.add(num8762, num824).equals(expectedRes2));
     }
 
 
@@ -205,8 +207,8 @@ public class BigNumArithmeticTest extends TestCase {
         expectedRes1.addLast(5);
         expectedRes1.addLast(8);
 
-        assertTrue(BigNumArithmetic.multiply(num1, num2).equals(expectedRes1));
-        assertTrue(BigNumArithmetic.multiply(num4, num5).equals(num4));
+        assertTrue(BigNumArithmetic.multiply(num8762, num97236).equals(expectedRes1));
+        assertTrue(BigNumArithmetic.multiply(num824, num1).equals(num824));
 
     }
 
@@ -247,8 +249,8 @@ public class BigNumArithmeticTest extends TestCase {
         expectedRes2.addLast(5);
         expectedRes2.addLast(2);
 
-        assertTrue(BigNumArithmetic.pow(num1, num3).equals(num5));
-        assertTrue(BigNumArithmetic.pow(num1, num5).equals(num1));
+        assertTrue(BigNumArithmetic.pow(num8762, num0).equals(num1));
+        assertTrue(BigNumArithmetic.pow(num8762, num1).equals(num8762));
         assertTrue(BigNumArithmetic.pow(num10, num11).equals(expectedRes1));
         assertTrue(BigNumArithmetic.pow(num11, num10).equals(expectedRes2));
     }
