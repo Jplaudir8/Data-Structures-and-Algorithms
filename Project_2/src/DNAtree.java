@@ -113,7 +113,40 @@ public class DNAtree {
 		
 		return true;
 	}
-
+	
+	private static void executeTreeOperation(String currentLine) {
+		
+		if (currentLine.trim().length() == 0) {
+			return;
+		}
+		
+		// separate every element and store them in array
+		// this array should always contain only two elements
+		String[] currentLineArr = currentLine.trim().split(" +");
+		
+		if (currentLineArr[0].equals("insert")) {
+			System.out.println("we insert " + currentLineArr[1]);
+			
+		} else if (currentLineArr[0].equals("remove")) {
+			System.out.println("we remove " + currentLineArr[1]);
+			
+		} else if (currentLineArr[0].equals("search")) {
+			System.out.println("we search " + currentLineArr[1]);
+			
+		} else if (currentLineArr[0].equals("print")) {
+			if (currentLineArr.length == 1) {
+				// print alone
+				System.out.println("we print alone");
+			} else if (currentLineArr[1].equals("lengths")) {
+				// print lengths
+				System.out.println("we print lengths");
+			} else if (currentLineArr[1].equals("stats")) {
+				// print stats
+				System.out.println("we print stats");
+			}
+		}
+	}
+	
 	/**
 	 * 
 	 * @param args the input file of commands
@@ -124,8 +157,7 @@ public class DNAtree {
 			Scanner sc = new Scanner(new File(args[0])); // Create new scanner
 			while (sc.hasNextLine()) { // While the scanner has information to
 										// read
-				FileParser parser = new FileParser();
-				parser.executeTreeOperation(sc.nextLine());
+				executeTreeOperation(sc.nextLine());
 			}
 			sc.close();
 		} catch (Exception e) {
