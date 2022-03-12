@@ -30,7 +30,7 @@ import java.util.Scanner;
  */
 public class DNAtree {
 
-	private DNATreeNode root;
+	private static DNATreeNode root;
 
 	public DNAtree() {
 		root = FlyweightNode.getFlyweight();
@@ -43,7 +43,7 @@ public class DNAtree {
 	 * @param newSequence
 	 * @param idx             
 	 */
-	public void insert(String newSequence) {
+	public static void insert(String newSequence) {
 		
 		if (newSequence == null) {
 			return;
@@ -80,7 +80,6 @@ public class DNAtree {
 			newInternalRoot.insert(rootToLeaf); // move leaf down
 			newInternalRoot.insert(newNode); // insert new node
 			
-			
 		} else if (root instanceof InternalNode) {
 			InternalNode internalNode = (InternalNode) root;
 			internalNode.insert(newNode);
@@ -93,7 +92,7 @@ public class DNAtree {
 		
 	}
 	
-	private boolean validSequence(char[] sequence) {
+	private static boolean validSequence(char[] sequence) {
 		
 		if (sequence == null) {
 			return false;
@@ -125,7 +124,7 @@ public class DNAtree {
 		String[] currentLineArr = currentLine.trim().split(" +");
 		
 		if (currentLineArr[0].equals("insert")) {
-			System.out.println("we insert " + currentLineArr[1]);
+			insert(currentLineArr[1]);
 			
 		} else if (currentLineArr[0].equals("remove")) {
 			System.out.println("we remove " + currentLineArr[1]);

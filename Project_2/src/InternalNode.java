@@ -43,6 +43,38 @@ public class InternalNode extends DNATreeNode {
 	// helper method that inserts recursively
 	private void insertDFS(int depth, LeafNode newLeafNode) {
 		
+		int index = newLeafNode.getIndexOfByDepth(depth);
+		DNATreeNode internalNodeChild = internalNodes[index];
+		
+		if (internalNodeChild instanceof FlyweightNode) {
+			internalNodeChild = newLeafNode; // root becomes a LeafNode
+			System.out.print("Sequence " + newLeafNode.toString() + " inserted at level " + depth + 1);
+		} else if (internalNodeChild instanceof LeafNode) {
+			if (index == 4) {
+				System.out.print("Sequence "+ newLeafNode.toString() + " already exists");
+				return;
+			}
+			
+			LeafNode nodeToLeaf = (LeafNode) internalNodeChild;
+			if (nodeToLeaf.containsSequence(newLeafNode)) {
+				System.out.println("sequence " + newLeafNode.toString() + " already exists");
+				return;
+			}
+			
+			InternalNode newInternalNode = new InternalNode();
+			internalNodeChild = newInternalNode;
+			newInternalNode.insertDFS(depth + 1, nodeToLeaf);
+			newInternalNode.insertDFS(depth + 1, newLeafNode);
+			
+		} else {
+			InternalNode newInternalNode = (InternalNode) internalNodeChild;
+			newInternalNode.insertDFS(depth + 1, newLeafNode);
+		}
+		
 	}
+	
+	
+	
+	
 	
 }

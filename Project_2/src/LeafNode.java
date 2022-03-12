@@ -28,6 +28,7 @@ public class LeafNode extends DNATreeNode {
 	
 	private char[] dnaSequence;
 	
+	
 	public LeafNode() {
 	}
 	
@@ -41,12 +42,19 @@ public class LeafNode extends DNATreeNode {
             nodeValue.dnaSequence));
     }
 	
-	public char getCharAtDepth(int depth) {
-        if (depth < dnaSequence.length) {
-            return dnaSequence[depth];
+	public int getIndexOfByDepth(int depth) {
+		String DNASequence = "ACGT$";
+		if (depth < dnaSequence.length) {
+            return DNASequence.indexOf(dnaSequence[depth]);
         }
-        return 0;
-    }
+        return -1;
+		
+	}
+	
+	@Override
+	public String toString() {
+		return String.valueOf(dnaSequence);
+	}
 	
 	
 }
