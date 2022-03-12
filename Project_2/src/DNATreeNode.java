@@ -34,11 +34,6 @@ public abstract class DNATreeNode {
 	}
 	
 	
-	
-	
-	
-	public void print() {
-		
-	}
+	public abstract void print(int depth);
 
 }

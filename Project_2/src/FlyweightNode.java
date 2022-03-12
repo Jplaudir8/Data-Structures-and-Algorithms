@@ -31,4 +31,9 @@ public class FlyweightNode extends DNATreeNode {
 		return flyweight;
 	}
 	
+	@Override
+	public void print(int depth) {
+		System.out.println("E");
+	}
+	
 }

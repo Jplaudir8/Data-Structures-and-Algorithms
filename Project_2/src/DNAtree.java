@@ -87,9 +87,20 @@ public class DNAtree {
 		
 	}
 	
-	
 	public void remove(String sequenceToRemove) {
 		
+	}
+	
+	public static void print() {
+		root.print(0);
+	}
+	
+	public static void printLengths() {
+		//root.printLengths();
+	}
+	
+	public static void printStats() {
+		//root.printStats();
 	}
 	
 	private static boolean validSequence(char[] sequence) {
@@ -113,7 +124,7 @@ public class DNAtree {
 		return true;
 	}
 	
-	private static void executeTreeOperation(String currentLine) {
+	public static void executeTreeOperation(String currentLine) {
 		
 		if (currentLine.trim().length() == 0) {
 			return;
@@ -134,14 +145,11 @@ public class DNAtree {
 			
 		} else if (currentLineArr[0].equals("print")) {
 			if (currentLineArr.length == 1) {
-				// print alone
-				System.out.println("we print alone");
+				print();
 			} else if (currentLineArr[1].equals("lengths")) {
-				// print lengths
-				System.out.println("we print lengths");
+				printLengths();
 			} else if (currentLineArr[1].equals("stats")) {
-				// print stats
-				System.out.println("we print stats");
+				printStats();
 			}
 		}
 	}

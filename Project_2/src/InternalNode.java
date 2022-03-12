@@ -72,6 +72,18 @@ public class InternalNode extends DNATreeNode {
 		}
 		
 	}
+
+	@Override
+	public void print(int depth) {
+		for (int i = 0; i < depth; i++) {
+			System.out.print(" ");
+		}
+		
+		System.out.print("I");
+		for (DNATreeNode currInternal : internalNodes) {
+			currInternal.print(depth + 1);
+        }
+	}
 	
 	
 	
