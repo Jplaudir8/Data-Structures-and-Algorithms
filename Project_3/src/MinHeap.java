@@ -1,12 +1,12 @@
 
 public class MinHeap<E extends Comparable> {
-	  private E[] Heap; // Pointer to the heap array
+	  private E[] heap; // Pointer to the heap array
 	  private int size;          // Maximum size of the heap
 	  private int n;             // Number of things now in heap
 
 	  // Constructor supporting preloading of heap contents
 	  MinHeap(E[] h, int num, int max) { 
-		  Heap = h;  
+		  heap = h;  
 		  n = num;  
 		  size = max;  
 		  buildheap(); 
@@ -44,10 +44,10 @@ public class MinHeap<E extends Comparable> {
 	      return;
 	    }
 	    int curr = n++;
-	    Heap[curr] = key;  // Start at end of heap
+	    heap[curr] = key;  // Start at end of heap
 	    // Now sift up until curr's parent's key > curr's key
-	    while ((curr != 0) && (Heap[curr].compareTo(Heap[parent(curr)]) > 0)) {
-	      this.swap(Heap, curr, parent(curr));
+	    while ((curr != 0) && (heap[curr].compareTo(heap[parent(curr)]) > 0)) {
+	      this.swap(heap, curr, parent(curr));
 	      curr = parent(curr);
 	    }
 	  }
@@ -61,46 +61,48 @@ public class MinHeap<E extends Comparable> {
 	    if ((pos < 0) || (pos >= n)) { return; } // Illegal position
 	    while (!isLeaf(pos)) {
 	      int j = leftchild(pos);
-	      if ((j<(n-1)) && (Heap[j].compareTo(Heap[j+1]) < 0)) {
-	        j++; // j is now index of child with greater value
+	      if ((j<(n-1)) && (heap[j].compareTo(heap[j+1]) > 0)) {
+	        j++; // j is now index of child with smaller value
 	      }
-	      if (Heap[pos].compareTo(Heap[j]) >= 0) { return; }
-	      this.swap(Heap, pos, j);
+	      if (heap[pos].compareTo(heap[j]) <= 0) { return; }
+	      this.swap(heap, pos, j);
 	      pos = j;  // Move down
 	    }
 	  }
 
 	  // Remove and return maximum value
-	  Comparable removemax() {
+	  Comparable removemin() {
 	    if (n == 0) { return -1; }  // Removing from empty heap
-	    this.swap(Heap, 0, --n); // Swap maximum with last value
+	    this.swap(heap, 0, --n); // Swap maximum with last value
 	    siftdown(0);   // Put new heap root val in correct place
-	    return Heap[n];
+	    return heap[n];
 	  }
 
 	  // Remove and return element at specified position
 	  Comparable remove(int pos) {
 	    if ((pos < 0) || (pos >= n)) { return -1; } // Illegal heap position
-	    if (pos == (n-1)) { n--; } // Last element, no work to be done
+	    if (pos == (n-1)) { 
+	    	n--; 
+	    	} // Last element, no work to be done
 	    else {
-	    	this.swap(Heap, pos, --n); // Swap with last value
+	    	this.swap(heap, pos, --n); // Swap with last value
 	    	update(pos);
 	    }
-	    return Heap[n];
+	    return heap[n];
 	  }
 
 	  // Modify the value at the given position
 	  void modify(int pos, E newVal) {
 	    if ((pos < 0) || (pos >= n)) { return; } // Illegal heap position
-	    Heap[pos] = newVal;
+	    heap[pos] = newVal;
 	    update(pos);
 	  }
 
 	  // The value at pos has been changed, restore the heap property
 	  void update(int pos) {
 	    // If it is a big value, push it up
-	    while ((pos > 0) && (Heap[pos].compareTo(Heap[parent(pos)]) > 0)) {
-	    	this.swap(Heap, pos, parent(pos));
+	    while ((pos > 0) && (heap[pos].compareTo(heap[parent(pos)]) > 0)) {
+	    	this.swap(heap, pos, parent(pos));
 	    	pos = parent(pos);
 	    }
 	    siftdown(pos); // If it is little, push down
