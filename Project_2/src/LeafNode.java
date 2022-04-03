@@ -56,13 +56,10 @@ public class LeafNode extends DNATreeNode {
 		return String.valueOf(dnaSequence);
 	}
 	
-	@Override
+	
 	public void print(int depth) {
-		
-		for (int i = 0; i < depth; i++) {
-			System.out.print(" ");
-		}
-		System.out.println(this.toString());
+		System.out.println(String.valueOf(dnaSequence));
 		
 	}
+	
 }

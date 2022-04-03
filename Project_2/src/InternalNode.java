@@ -48,10 +48,10 @@ public class InternalNode extends DNATreeNode {
 		
 		if (internalNodeChild instanceof FlyweightNode) {
 			internalNodeChild = newLeafNode; // root becomes a LeafNode
-			System.out.print("Sequence " + newLeafNode.toString() + " inserted at level " + depth + 1);
+			System.out.println("Sequence " + newLeafNode.toString() + " inserted at level " + (depth + 1));
 		} else if (internalNodeChild instanceof LeafNode) {
 			if (index == 4) {
-				System.out.print("Sequence "+ newLeafNode.toString() + " already exists");
+				System.out.println("Sequence "+ newLeafNode.toString() + " already exists");
 				return;
 			}
 			
@@ -73,19 +73,13 @@ public class InternalNode extends DNATreeNode {
 		
 	}
 
-	@Override
+	
 	public void print(int depth) {
-		for (int i = 0; i < depth; i++) {
-			System.out.print(" ");
-		}
-		
 		System.out.print("I");
 		for (DNATreeNode currInternal : internalNodes) {
 			currInternal.print(depth + 1);
         }
 	}
-	
-	
 	
 	
 	

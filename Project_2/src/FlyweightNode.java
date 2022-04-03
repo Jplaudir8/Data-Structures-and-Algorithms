@@ -21,19 +21,20 @@
  */
 public class FlyweightNode extends DNATreeNode {
 	
-	private static FlyweightNode flyweight;
+	private static FlyweightNode flyweight = new FlyweightNode();
 	
 	public FlyweightNode() {
-		flyweight = new FlyweightNode();
+		//flyweight = new FlyweightNode();
 	}
 	
 	public static FlyweightNode getFlyweight() {
 		return flyweight;
 	}
 	
-	@Override
+	
 	public void print(int depth) {
 		System.out.println("E");
 	}
+	
 	
 }

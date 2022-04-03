@@ -1,4 +1,20 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.RandomAccessFile;
+
+/**
+ * {Project Description Here}
+ */
+
+/**
+ * The class containing the main method.
+ *
+ * @author {Your Name Here}
+ * @version {Put Something Here}
+ */
+
 // On my honor:
+//
 // - I have not used source code obtained from another student,
 // or any other unauthorized source, either modified or
 // unmodified.
@@ -7,8 +23,8 @@
 // either my original work, or was derived by me from the
 // source code published in the textbook for this course.
 //
-// - I have not discussed coding details about this project
-// with anyone other than my partner (in the case of a joint
+// - I have not discussed coding details about this project with
+// anyone other than my partner (in the case of a joint
 // submission), instructor, ACM/UPE tutors or the TAs assigned
 // to this course. I understand that I may discuss the concepts
 // of this program with other students, and that another student
@@ -17,26 +33,18 @@
 // during the discussion. I have violated neither the spirit nor
 // letter of this restriction.
 
-/**
- * Tests the DNAtree class
- *
- * @author Joan Piayet Perez Lozano (joanperezl)
- * @author Raena Rahimi Bafrani (raenar)
- * @version Feb 25, 2022
- */
-public abstract class DNATreeNode {
+public class Externalsort {
 	
-	public DNATreeNode() {
-
-	}
 	
-	public void indentAndPrint(int depth) {
-		for (int i = 0; i < depth; i++) {
-			System.out.print("  ");
-		}
-		print(depth);
-	}
 	
-	public abstract void print(int depth);
+    /**
+     * @param args
+     *     Command line parameters
+     * @throws FileNotFoundException 
+     */
+    public static void main(String[] args) throws FileNotFoundException {
+    	FileParser parser = new FileParser(args[0]);
+    	
+    }
 
 }
