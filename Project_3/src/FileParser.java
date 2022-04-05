@@ -13,16 +13,14 @@ public class FileParser {
 	}
 	
 	public Record readRecord() throws IOException {
-		
 		byte[] singleRecord = new byte[16];
-		
 		// if existent, load up to 16 bytes from input file (1 record)
 		if (inputRAF.read(singleRecord) != -1) {
 			Record newRecord = new Record(singleRecord);
 			return newRecord;
 		} 
-		
 		return null;
 	}
+	
 	
 }

@@ -43,6 +43,12 @@ public class Externalsort {
      * @throws FileNotFoundException 
      */
     public static void main(String[] args) throws FileNotFoundException {
+    	
+    	if (args.length != 1) {
+    		System.out.println("Input format not recognized.");
+    	}
+    	
+    	// Parse input file into a Random Access File
     	FileParser parser = new FileParser(args[0]);
     	
     }
