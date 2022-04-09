@@ -5,11 +5,13 @@ import java.io.RandomAccessFile;
 
 public class FileParser {
 	
-	RandomAccessFile inputRAF;
+	private RandomAccessFile inputRAF;
+	private int blocksNeeded;
 	
 	public FileParser(String file) throws FileNotFoundException {
 		File inputFile = new File(file);
 		inputRAF = new RandomAccessFile(inputFile, "r");
+		blocksNeeded = inputRAF.length();
 	}
 	
 	public Record readRecord() throws IOException {
@@ -21,6 +23,5 @@ public class FileParser {
 		} 
 		return null;
 	}
-	
 	
 }
