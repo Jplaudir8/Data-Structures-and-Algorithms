@@ -28,17 +28,19 @@ import java.util.ArrayList;
  */
 public class MultiwayMerge {
     
-    
-    private static final int BLOCK_RECORDS = 512;
+    private static final int RECORDS_PER_BLOCK = 512;
     private static final int RECORD_SIZE = 16;
-    private static final int MAX_WORKING_BLOCKS = 8;
+    private static final int WORKING_SPACE_BLOCKS = 8;
+    
+    private BinaryFileOperator runfile;
+    private BinaryFileOperator binaryFile;
+    
     private Record[] workingMemory;
     private Record[] inputBuffer;
     private Record[] outputBuffer;
-    private BinaryFileOperator runfile;
-    private BinaryFileOperator binaryFile;
+    
     private String runFileName = "runfile";
-    private ArrayList<Run> runList;
+    private LinkedList<Run> runList;
     
     /**
      * Replacement Selection Constructor
@@ -47,11 +49,11 @@ public class MultiwayMerge {
      *            binary file to be sorted
      */
     public MultiwayMerge(String binFile) {
-        binaryFile = new BinaryFileOperator(binFile, RECORD_SIZE, BLOCK_RECORDS);
-        workingMemory = new Record[MAX_WORKING_BLOCKS * BLOCK_RECORDS];
-        inputBuffer = new Record[BLOCK_RECORDS];
-        outputBuffer = new Record[BLOCK_RECORDS];
-        runList = new ArrayList<Run>();
+        binaryFile = new BinaryFileOperator(binFile, RECORD_SIZE, RECORDS_PER_BLOCK);
+        workingMemory = new Record[WORKING_SPACE_BLOCKS * RECORDS_PER_BLOCK];
+        inputBuffer = new Record[RECORDS_PER_BLOCK];
+        outputBuffer = new Record[RECORDS_PER_BLOCK];
+        runList = new LinkedList<Run>();
     }
     
     /**
@@ -62,13 +64,13 @@ public class MultiwayMerge {
      * @return Status of read operation
      */
     private int fillInputBuffer(BinaryFileOperator fileDesc) {
-        byte[][] byteBlock = new byte[BLOCK_RECORDS][RECORD_SIZE];
+        byte[][] byteBlock = new byte[RECORDS_PER_BLOCK][RECORD_SIZE];
         int readStatus = -1;
         if ((fileDesc != null) && (inputBuffer != null)) {
             readStatus = fileDesc.getNextBlock(byteBlock);
         }
         if (readStatus != -1) {
-            for (int i = 0; i < BLOCK_RECORDS; i++) {
+            for (int i = 0; i < RECORDS_PER_BLOCK; i++) {
                 inputBuffer[i] = new Record(byteBlock[i]);
             }
         }
@@ -90,7 +92,7 @@ public class MultiwayMerge {
         BinaryFileOperator fileDesc,
         long offset,
         int lenBlk) {
-        byte[][] byteBlock = new byte[BLOCK_RECORDS][RECORD_SIZE];
+        byte[][] byteBlock = new byte[RECORDS_PER_BLOCK][RECORD_SIZE];
         int numRecords = 0;
         if ((fileDesc != null) && (inputBuffer != null)) {
             numRecords = fileDesc.getBlockFrom(byteBlock, offset, lenBlk);
@@ -113,13 +115,13 @@ public class MultiwayMerge {
         int runLength = 0;
         int fillStatus = 0;
         long prevOffset = 0;
-        BinaryFileOperator.deleteIfExists(runFileName);
+        Writer.deleteIfExists(runFileName);
         runfile = new BinaryFileOperator(runFileName, RECORD_SIZE,
-            BLOCK_RECORDS);
-        for (int k = 0; k < MAX_WORKING_BLOCKS; k++) {
+        		RECORDS_PER_BLOCK);
+        for (int k = 0; k < WORKING_SPACE_BLOCKS; k++) {
             fillInputBuffer(binaryFile);
-            System.arraycopy(inputBuffer, 0, workingMemory, k * BLOCK_RECORDS,
-                BLOCK_RECORDS);
+            System.arraycopy(inputBuffer, 0, workingMemory, k * RECORDS_PER_BLOCK,
+            		RECORDS_PER_BLOCK);
         }
         MinHeap<Record> heap = new MinHeap<Record>(workingMemory,
             workingMemory.length, workingMemory.length);
@@ -174,6 +176,7 @@ public class MultiwayMerge {
         runfile.closeFile();
     }
     
+    
     /**
      * Get the index of smallest record in an array
      * 
@@ -214,7 +217,7 @@ public class MultiwayMerge {
      */
     private void mergeRuns(Run[] runInfo, int runs) {
         BinaryFileOperator rf = new BinaryFileOperator(runFileName, RECORD_SIZE,
-            BLOCK_RECORDS);
+        		RECORDS_PER_BLOCK);
         Record[] runElements = new Record[runs];
         int[] blkPtr = new int[runs];
         int[] recCnt = new int[runs];
@@ -225,18 +228,18 @@ public class MultiwayMerge {
         long tempOffset = prevOffset;
         for (int l = 0; l < runs; l++) {
             blkSize = (runInfo[l].blockCount > 1)
-                ? BLOCK_RECORDS
+                ? RECORDS_PER_BLOCK
                 : runInfo[l].runLength;
             readCnt = fillInputBufferFrom(rf, runInfo[l].runFileOffset,
                 blkSize);
-            System.arraycopy(inputBuffer, 0, workingMemory, l * BLOCK_RECORDS,
+            System.arraycopy(inputBuffer, 0, workingMemory, l * RECORDS_PER_BLOCK,
                 readCnt);
             effectiveRecordSize = effectiveRecordSize + runInfo[l].runLength;
             runInfo[l].runLength = runInfo[l].runLength - readCnt;
             runInfo[l].runFileOffset = rf.getFileOffset();
             runInfo[l].blockCount -= 1;
             recCnt[l] = readCnt;
-            runElements[l] = workingMemory[l * BLOCK_RECORDS];
+            runElements[l] = workingMemory[l * RECORDS_PER_BLOCK];
             blkPtr[l] = 0;
         }
         int runSize = effectiveRecordSize;
@@ -257,12 +260,12 @@ public class MultiwayMerge {
             for (int i = 0; i < runs; i++) {
                 if ((blkPtr[i] == recCnt[i]) && (runInfo[i].blockCount > 0)) {
                     blkSize = (runInfo[i].blockCount > 1)
-                        ? BLOCK_RECORDS
+                        ? RECORDS_PER_BLOCK
                         : runInfo[i].runLength;
                     readCnt = fillInputBufferFrom(rf, runInfo[i].runFileOffset,
                         blkSize);
                     System.arraycopy(inputBuffer, 0, workingMemory, i
-                        * BLOCK_RECORDS, readCnt);
+                        * RECORDS_PER_BLOCK, readCnt);
                     runInfo[i].runLength = runInfo[i].runLength - readCnt;
                     runInfo[i].runFileOffset = rf.getFileOffset();
                     runInfo[i].blockCount -= 1;
@@ -275,7 +278,7 @@ public class MultiwayMerge {
                 }
             }
             if (runElements[idx] != null) {
-                runElements[idx] = workingMemory[idx * BLOCK_RECORDS
+                runElements[idx] = workingMemory[idx * RECORDS_PER_BLOCK
                     + blkPtr[idx]];
             }
             effectiveRecordSize--;
@@ -296,10 +299,10 @@ public class MultiwayMerge {
      * Run Multiway merge for all the runs generated by replacement selection
      */
     public void runMultiwayMerge() {
-        Run[] runInfo = new Run[MAX_WORKING_BLOCKS];
+        Run[] runInfo = new Run[WORKING_SPACE_BLOCKS];
         while (runList.getListLength() > 1) {
             int i = 0;
-            while ((!runList.isEmpty()) && (i != MAX_WORKING_BLOCKS)) {
+            while ((!runList.isEmpty()) && (i != WORKING_SPACE_BLOCKS)) {
                 runInfo[i] = runList.pop();
                 i++;
             }
@@ -309,9 +312,9 @@ public class MultiwayMerge {
         String outFileName = "outfile";
         BinaryFileOperator.deleteIfExists(outFileName);
         BinaryFileOperator outfile = new BinaryFileOperator(outFileName,
-            RECORD_SIZE, BLOCK_RECORDS);
+            RECORD_SIZE, RECORDS_PER_BLOCK);
         runfile = new BinaryFileOperator(runFileName, RECORD_SIZE,
-            BLOCK_RECORDS);
+        		RECORDS_PER_BLOCK);
         outfile.copyFromFile(runfile, finalRecord.runFileOffset,
             finalRecord.runLength * RECORD_SIZE);
         outfile.closeFile();

@@ -112,5 +112,73 @@ public class LinkedList<T> {
         this.head = null;
         this.size = 0;
     }
-
+    
+    /**
+     * Pop function for LL
+     * 
+     * @return poped node from LL
+     */
+    public T pop() {
+        ListNode<T> first = head.getNext();
+        ListNode<T> temp;
+        if (first != null) {
+            temp = first.getNext();
+            head.setNext(temp);
+            
+            return first.getValue();
+        }
+        else {
+            return null;
+        }
+    }
+    
+    /**
+     * Inserts data into the linked list
+     * 
+     * @param record
+     *            record to be inserted
+     */
+    public void insert(T record) {
+    	ListNode<T> newNode = new ListNode<T>(record);
+    	
+    	if (head == null) {
+    		head = newNode;
+    	}
+    	
+        if (head.getNext() == null) {
+            head.setNext(newNode);
+        }
+        else {
+        	ListNode<T> curr = head;
+        	while (curr.getNext() != null) {
+        		curr = curr.getNext();
+        	}
+            curr.setNext(newNode);
+        }
+    }
+    
+    /**
+     * This method returns the number of nodes in the linked list. The count
+     * does not include the head node.
+     * 
+     * @return int length of the linked list
+     */
+    public int getListLength() {
+        int length = 0;
+        ListNode<T> curr = head.getNext();
+        while (curr != null) {
+            length++;
+            curr = curr.getNext();
+        }
+        return length;
+    }
+    
+    /**
+     * Check if the list is empty
+     * 
+     * @return boolean check for empty list
+     */
+    public boolean isEmpty() {
+        return (head == null);
+    }
 }

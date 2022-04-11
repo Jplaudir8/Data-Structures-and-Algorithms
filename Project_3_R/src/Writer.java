@@ -118,5 +118,16 @@ public class Writer {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Close the binary file that is open
+     */
+    public void closeFile() {
+        try {
+            random.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

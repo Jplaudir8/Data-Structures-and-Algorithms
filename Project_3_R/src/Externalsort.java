@@ -34,22 +34,22 @@ import java.nio.file.Paths;
  * @version March 22, 2022
  */
 public class Externalsort {
-    /**
-     * Constant: bytes per record
-     */
-    public static final int RECORD_SIZE = 16;
-    /**
-     * Constant: bytes per block
-     */
-    public static final int BLOCK_SIZE = 8192;
-    /**
-     * Constant: bytes per block
-     */
-    public static final int BLOCK_RECORDS = 512;
-    /**
-     * Constant: bytes per block
-     */
-    public static final int MAX_WORKING_BLOCKS = 8;
+//    /**
+//     * Constant: bytes per record
+//     */
+//    public static final int RECORD_SIZE = 16;
+//    /**
+//     * Constant: bytes per block
+//     */
+//    public static final int BLOCK_SIZE = 8192;
+//    /**
+//     * Constant: bytes per block
+//     */
+//    public static final int RECORDS_PER_BLOCK = 512;
+//    /**
+//     * Constant: bytes per block
+//     */
+//    public static final int MAX_BLOCKS_WORKING_BUFF = 8;
 
     /**
      * @param args
@@ -59,15 +59,15 @@ public class Externalsort {
     public static void main(String[] args) throws FileNotFoundException {
 //        FileParser parser = new FileParser(args[0]);
         if (args.length != 1) {
-            System.out.println("Usage: java Externalsort <record file name>");
+            System.out.println("Invalid command and/or input...");
             return;
         }
-
+        
         MultiwayMerge rs = new MultiwayMerge(args[0]);
         rs.runReplacementSelection();
         rs.runMultiwayMerge();
-
-        String outFileName = "outfile";
+        
+        String outFileName = "outfile"; // ??
         Record[] firstRecords;
         if (Files.exists(Paths.get(outFileName))) {
             BinaryFileOperator sortedFile = new BinaryFileOperator(outFileName,
