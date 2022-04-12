@@ -3,7 +3,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * {Project Description Here}
+ * This program represents an external sort algorithm. 
+ * The program sorts a set of fixed-length records of 16 bytes. 
+ * It starts by generating a series of sorted subsets(runs) 
+ * through replacement selection. Once these runs have been generated, 
+ * they go through a merging phase, where a multi-way merge algorithm 
+ * is implemented. The program finalizes by generating a file with 
+ * all the records sorted. Access to the binary file to be sorted is performed
+ * through RandomAccessFile to preserve I/O efficiency.
  */
 
 // On my honor:
@@ -27,7 +34,7 @@ import java.nio.file.Paths;
 // letter of this restriction.
 
 /**
- * The class containing the main method.
+ * Represents the driver code for the external sort algorithm.
  *
  * @author Joan Piayet Perez Lozano (joanperezl)
  * @author Raena Rahimi Bafrani (raenar)
@@ -73,7 +80,7 @@ public class Externalsort {
             BinaryFileOperator sortedFile = new BinaryFileOperator(outFileName,
                 16, 512);
             long[] fileStats = sortedFile.getFileStats();
-            int numBlocks = (int)fileStats[2];
+            int numBlocks = (int) fileStats[2];
             firstRecords = new Record[numBlocks];
             int status = 0;
             for (int i = 0; i < numBlocks; i++) {

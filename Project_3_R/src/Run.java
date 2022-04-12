@@ -19,7 +19,7 @@
 // letter of this restriction.
 
 /**
- * 
+ * Represents a run, generated from the replacement selection algorithm.
  *
  * @author Joan Piayet Perez Lozano (joanperezl)
  * @author Raena Rahimi Bafrani (raenar)

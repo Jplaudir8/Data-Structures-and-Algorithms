@@ -23,6 +23,7 @@ public class BinaryFileOperator {
      *            length of each record
      * @param blockLength
      *            length of block of records
+     * @throws IOException 
      */
     public BinaryFileOperator(
         String inFile,
@@ -43,8 +44,9 @@ public class BinaryFileOperator {
             e.printStackTrace();
         }
         catch (IOException e) {
-            e.printStackTrace();
+        	e.printStackTrace();
         }
+        
     }
     
     /**
@@ -114,23 +116,23 @@ public class BinaryFileOperator {
      *            byte array to hold the block
      * @return status of the read operation
      */
-    public int getNextBlock(byte[][] block) {
+    public int extractBlock(byte[][] block) {
         if ((currentBlock == totalBlocks) || (block.length != blockLen)) {
             closeFile();
             return -1;
         }
         try {
             for (int i = 0; i < blockLen; i++) {
-                random.seek(fileOffset);
-                random.read(block[i]);
-                fileOffset = random.getFilePointer();
+                random.seek(fileOffset); // place pointer using our offset
+                random.read(block[i]); // load next 16 recs into block[i]
+                fileOffset = random.getFilePointer(); // re set offset
             }
             currentBlock++;
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-        return 0;
+        return 1;
     }
     
     /**
