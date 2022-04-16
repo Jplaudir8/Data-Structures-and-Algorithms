@@ -13,25 +13,27 @@
 // letter of this restriction.
 
 /**
- * This class represents a command parser that reads through inputs and based on them executes actions for the Skip List.
+ * This class represents a command parser that reads through inputs and based on
+ * them executes actions for the Skip List.
  *
  * @author Joan Piayet Perez Lozano (joanperezl)
  * @author Raena Rahimi Bafrani (raenar)
  * @version Apr 16, 2022
  */
 public class Command {
-	
-	private String cmd; 
-	
+
+	private String cmd;
+
 	public Command(String input) {
 		cmd = input;
 	}
-	
+
 	public void executeCommandOperation() {
 		if (cmd.trim().length() == 0) {
-            return;
-        }
-		
+			return;
+		}
+
 		// Develop method calls...
+		
 	}
 }
