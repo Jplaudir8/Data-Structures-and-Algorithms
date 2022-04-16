@@ -30,6 +30,7 @@ public class Record implements Comparable<Record> {
         return completeRecord;
     }
 
+
     /**
      * Returns the object's key
      * 
@@ -44,7 +45,7 @@ public class Record implements Comparable<Record> {
     /**
      * Compare Two Records based on their keys
      * 
-     * @param o
+     * @param toBeCompared
      *            - The Record to be compared.
      * @return A negative integer, zero, or a positive integer as this employee
      *         is less than, equal to, or greater than the supplied record
@@ -56,13 +57,25 @@ public class Record implements Comparable<Record> {
     }
 
 
+    
+    /**
+     * Returns the object's ID
+     * 
+     * @return the ID
+     */
+    public long getID() {
+        ByteBuffer buff = ByteBuffer.wrap(completeRecord);
+        return buff.getLong();
+    }
+    
+    
     /**
      * Outputs the record as a String
      * 
      * @return a string of what the record contains
      */
     public String toString() {
-        return "" + this.getKey();
+        return this.getID() + " " + this.getKey();
     }
 
 }
