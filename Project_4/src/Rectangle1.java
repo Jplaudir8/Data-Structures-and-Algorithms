@@ -39,7 +39,8 @@ public class Rectangle1 {
 	
 	public Rectangle1(String name, int xCoord, int yCoord, int width, int height) {
 		if (!validProperties(name, xCoord, yCoord, width, height)) {
-			throw new IllegalArgumentException("One or more invalid properties for the world box.");
+			// throw new IllegalArgumentException("One or more invalid properties for the world box.");
+			// print error to console awaiting for prof answer. 
 		}
 		this.name = name;
 		this.xCoord = xCoord;
@@ -65,9 +66,17 @@ public class Rectangle1 {
 			return false;
 		}
 		
+		// Validate it is within world box constraints
+		
+		
 		return true;
 	}
 	
+	/**
+	 * Validates the the correctness of the naming convention for the rectangle.
+	 * @param rectName
+	 * @return
+	 */
 	private boolean nameIsValid(String rectName) {
 		if (rectName.length() < 1) {
 			// Requires at least one character
