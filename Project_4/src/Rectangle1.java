@@ -31,80 +31,60 @@ import java.util.Scanner;
  */
 public class Rectangle1 {
 	
-	private String name;
-	private int xCoord;
-	private int yCoord;
-	private int width;
-	private int height;
+	private SkipList skipList;
 	
-	public Rectangle1(String name, int xCoord, int yCoord, int width, int height) {
-		if (!validProperties(name, xCoord, yCoord, width, height)) {
-			// throw new IllegalArgumentException("One or more invalid properties for the world box.");
-			// print error to console awaiting for prof answer. 
-		}
-		this.name = name;
-		this.xCoord = xCoord;
-		this.yCoord = yCoord;
-		this.width  = width;
-		this.height = height;
+	// implementing methods:
+	// insert(name, x, y, w, h),
+	// remove(name)
+	// remove(x, y, w, h)
+	// regionsearch(x, y, w, h)
+	// intersections()
+	// search(name)
+	// dump()
+	
+	public Rectangle1 () {
+		skipList = new SkipList();
 	}
 	
-	public boolean validProperties(String name, int xCoord, int yCoord, int width, int height) {
-		
-		// Check correctness of naming format
-		if (!nameIsValid(name)) {
-			return false;
-		}
-		
-		// Check for negative coordinates
-		if (xCoord < 0 || yCoord < 0) {
-			return false;
-		}
-		
-		// Check for positive dimensions
-		if (width <= 0 || height <= 0) {
-			return false;
-		}
-		
-		// Validate it is within world box constraints
-		
-		
-		return true;
+	public void insert(String name, int x, int y, int w, int h) {
+		RectangleFigure newRectangle = new RectangleFigure(name, x, y, w, h);
+		// insert rectangle in skip list
+		skipList.insert(name, newRectangle);
 	}
 	
-	/**
-	 * Validates the the correctness of the naming convention for the rectangle.
-	 * @param rectName
-	 * @return
-	 */
-	private boolean nameIsValid(String rectName) {
-		if (rectName.length() < 1) {
-			// Requires at least one character
-			return false;
-		}
+	public void remove(String name) {
 		
-		// check for correctness of remaining characters
-		for (int i = 0; i < rectName.length(); i++) {
-			int currChar = rectName.charAt(0);
-			// if first character is not a letter
-			if (i == 0 && !Character.isLetter(currChar)) {
-				return false;
-			}
-			
-			if (i >= 1 && !Character.isLetterOrDigit(currChar) && currChar != '_') {
-				return false;
-			}			
-		}
-		return true;
+	}
+	
+	public void remove(int x, int y, int width, int height) {
+		
+	}
+	
+	public void regionSearch(int x, int y, int w, int height) {
+		
+	}
+	
+	public void intersections() {
+		
+	}
+	
+	
+	public void search() {
+		
+	}
+	
+	public void dump() {
+		
 	}
 	
 	public static void main(String[] args) {
+		Rectangle1 rectangleControl = new Rectangle1();
 		// Read commands
 		Scanner scannedFile = scanFile(args[0]);
 		while (scannedFile.hasNext()) {
 			String line = trimWhitespaceOf(scannedFile.nextLine());
 			if (!line.isEmpty()) {
-				Command currCommand = new Command(line);
+				Command currCommand = new Command(line, rectangleControl);
 				currCommand.executeCommandOperation();
 			}
 		}

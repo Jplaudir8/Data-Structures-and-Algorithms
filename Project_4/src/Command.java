@@ -23,9 +23,13 @@
 public class Command {
 
 	private String cmd;
+	private Rectangle1 rectangle;
+	
 
-	public Command(String input) {
-		cmd = input;
+	public Command(String input, Rectangle1 rectangle) {
+		this.cmd = input;
+		this.rectangle = rectangle;
+		
 	}
 
 	public void executeCommandOperation() {
@@ -33,7 +37,35 @@ public class Command {
 			return;
 		}
 
-		// Develop method calls...
+		// Developing method calls for:
+		
+		String[] currentLineArr = cmd.toLowerCase().trim().split(" +");
+		
+		if (currentLineArr[0].equals("insert")) {
+			// insert(name, x, y, w, h),
+			rectangle.insert(currentLineArr[1], 
+					Integer.valueOf(currentLineArr[2]), 
+					Integer.valueOf(currentLineArr[3]), 
+					Integer.valueOf(currentLineArr[4]), 
+					Integer.valueOf(currentLineArr[5])
+					);
+		} else if (currentLineArr[0].equals("remove")) {
+			if (currentLineArr.length == 2) {
+				// remove by matching name
+				// remove(name)
+			} else {
+				// remove by matching coordinates + dimensions
+				// remove(x, y, w, h)
+			}
+		} else if (currentLineArr[0].equals("regionsearch")) {
+			// regionsearch(x, y, w, h)
+		} else if (currentLineArr[0].equals("intersections")) {
+			// intersections()
+		} else if (currentLineArr[0].equals("search")) {
+			// search(name)
+		} else if (currentLineArr[0].equals("dump")) {
+			// dump()
+		}
 		
 	}
 	
