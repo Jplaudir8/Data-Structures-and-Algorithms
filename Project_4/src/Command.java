@@ -64,7 +64,7 @@ public class Command {
 		} else if (currentLineArr[0].equals("search")) {
 			// search(name)
 		} else if (currentLineArr[0].equals("dump")) {
-			// dump()
+			rectangle.dump();
 		}
 		
 	}

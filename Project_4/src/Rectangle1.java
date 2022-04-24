@@ -47,9 +47,14 @@ public class Rectangle1 {
 	}
 	
 	public void insert(String name, int x, int y, int w, int h) {
-		RectangleFigure newRectangle = new RectangleFigure(name, x, y, w, h);
-		// insert rectangle in skip list
-		skipList.insert(name, newRectangle);
+		try {
+			RectangleFigure newRectangle = new RectangleFigure(name, x, y, w, h);
+			// if object creation succeeded, insert rectangle
+			skipList.insert(name, newRectangle);
+		} catch(IllegalArgumentException e) {
+			System.out.println("Rectangle rejected: (" + name + ", " + x + ", " + y + ", " + w + ", "
+					+ h + ")\n");
+		}
 	}
 	
 	public void remove(String name) {
@@ -74,7 +79,7 @@ public class Rectangle1 {
 	}
 	
 	public void dump() {
-		
+		skipList.printContents();
 	}
 	
 	public static void main(String[] args) {

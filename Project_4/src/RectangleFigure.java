@@ -9,41 +9,43 @@ public class RectangleFigure {
 	public RectangleFigure(String name, int xCoord, int yCoord, int width, int height) {
 		System.out.println("insert " + name + " " + xCoord + " " + yCoord + " " + width + " " + height);
 		if (!validProperties(name, xCoord, yCoord, width, height)) {
-			System.out.println("Rectangle rejected: (" + name + ", " + xCoord + ", " + yCoord + ", " + width + ", "
-					+ height + ")");
-			throw new IllegalArgumentException("Rectangle");
-			// print error to console awaiting for prof answer.
-		} else {
-			System.out.println("Rectangle inserted: (" + name + ", " + xCoord + ", " + yCoord + ", " + width + ", "
-					+ height + ")");
+			throw new IllegalArgumentException();
 		}
+		
 		this.name = name;
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
 		this.width = width;
 		this.height = height;
+		
+		System.out.println("Rectangle inserted: (" + name + ", " + xCoord + ", " + yCoord + ", " + width + ", "
+				+ height + ")\n");	
 	}
 
 	public boolean validProperties(String name, int xCoord, int yCoord, int width, int height) {
 
 		// Check correctness of naming format
 		if (!nameIsValid(name)) {
+			// System.out.println("invalid name");
 			return false;
 		}
 
 		// Check for negative coordinates
 		if (xCoord < 0 || yCoord < 0) {
+			// System.out.println("invalid coordinates");
 			return false;
 		}
 
 		// Check for positive dimensions
 		if (width <= 0 || height <= 0) {
+			// System.out.println("invalid width or height dimensions");
 			return false;
 		}
 
 		// Validate it is within world box constraints
 		if (xCoord < 0 || xCoord > 1024 || yCoord < 0 || yCoord > 1024 || xCoord + width > 1024
 				|| yCoord + height > 1024) {
+			// System.out.println("outside world box constraints");
 			return false;
 		}
 
@@ -59,21 +61,29 @@ public class RectangleFigure {
 	private boolean nameIsValid(String rectName) {
 		if (rectName.length() < 1) {
 			// Requires at least one character
+			//System.out.println("less than 1");
 			return false;
 		}
 
-		// check for correctness of remaining characters
+		// check for correctness of characters
 		for (int i = 0; i < rectName.length(); i++) {
-			int currChar = rectName.charAt(0);
+			int currChar = rectName.charAt(i);
 			// if first character is not a letter
 			if (i == 0 && !Character.isLetter(currChar)) {
+				//System.out.println("first character is not a letter");
 				return false;
 			}
 
 			if (i >= 1 && !Character.isLetterOrDigit(currChar) && currChar != '_') {
+				//System.out.println("some remaining character is not a letter, digit neither _");
 				return false;
 			}
 		}
 		return true;
+	}
+	
+	public String toString() {
+		return "(" + name + ", " + xCoord + ", " + yCoord + ", " + width + ", "
+				+ height + ")";
 	}
 }
