@@ -40,7 +40,6 @@ public class Rectangle1 {
 	// regionsearch(x, y, w, h)
 	// intersections()
 	// search(name)
-	// dump()
 	
 	public Rectangle1 () {
 		skipList = new SkipList();
@@ -74,8 +73,18 @@ public class Rectangle1 {
 	}
 	
 	
-	public void search() {
-		
+	public void search(String rectangleName) {
+		System.out.println("search " + rectangleName);
+		SinglyLinkedList<RectangleFigure> rectList = skipList.find(rectangleName);
+		if (rectList != null) {
+			SinglyLinkedList<RectangleFigure>.ListNode<RectangleFigure> currNode = rectList.getHead();
+			while (currNode != null) {
+				System.out.println("(" + currNode.getValue().toString() + ")");
+				currNode = currNode.getNext();
+			}			
+		} else {
+			System.out.print("Rectangle not found: " + rectangleName);
+		}
 	}
 	
 	public void dump() {

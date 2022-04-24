@@ -22,7 +22,7 @@ public interface Dictionary<K, E> {
 	  /** @return A record matching "k" (null if none exists).
 	      If multiple records match, return an arbitrary one.
 	      @param k The key of the record to find */
-	  public E find(K key);
+	  public SinglyLinkedList<E> find(K key);
 
 	  /** @return The number of records in the dictionary. */
 	  public int size();

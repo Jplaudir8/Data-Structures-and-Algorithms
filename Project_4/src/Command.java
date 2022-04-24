@@ -62,7 +62,7 @@ public class Command {
 		} else if (currentLineArr[0].equals("intersections")) {
 			// intersections()
 		} else if (currentLineArr[0].equals("search")) {
-			// search(name)
+			rectangle.search(currentLineArr[1]);
 		} else if (currentLineArr[0].equals("dump")) {
 			rectangle.dump();
 		}

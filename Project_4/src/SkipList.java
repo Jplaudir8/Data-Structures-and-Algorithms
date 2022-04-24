@@ -95,18 +95,20 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
-	public E find(K key) {
-		SkipNode<K, E> x = head; // Dummy header node
+	public SinglyLinkedList<E> find(K key) {
+		SkipNode<K, E> currNode = head; // Dummy header node
 		for (int i = level; i >= 0; i--) // For each level...
-			while ((x.forward[i] != null) && (x.forward[i].key().compareTo(key) < 0)) // go forward
-				x = x.forward[i]; // Go one last step
-		x = x.forward[0]; // Move to actual record, if it exists
-		if ((x != null) && (x.key().compareTo(key) == 0))
-			return x.element(); // Got it
-		else
-			return null; // Its not there
+			while ((currNode.forward[i] != null) && (currNode.forward[i].key().compareTo(key) < 0)) // go forward
+				currNode = currNode.forward[i]; // Go one last step
+		currNode = currNode.forward[0]; // Move to actual record, if it exists
+		SinglyLinkedList<E> rectList = new SinglyLinkedList<>();
+		while ((currNode != null) && (currNode.key().compareTo(key) == 0)) {
+			rectList.addLast(currNode.element());
+			currNode = currNode.forward[0];
+		}
+		return rectList.size() > 0 ? rectList : null;
 	}
 
 	@Override

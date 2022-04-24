@@ -2,9 +2,13 @@
 insert r_r          -1 -20 3 4
   insert rec        7 -8 1 3
 insert virtual_rec0 1 1 0 0
-insert rect_1 -1 0 11 12
-insert rect_2 -1 1 13 1023
-insert rect_3 -1 0 11 30
+insert b 0 0 11 12
+insert b 0 2 11 12
+insert b 4 8 99 16
+insert c 1 1 13 1023
+insert a 20 0 11 30
 insert inExistRec_0 1 1 13 1024
 
 dump
+
+search x
