@@ -79,7 +79,7 @@ public class Rectangle1 {
 	}
 	
 	public void dump() {
-		skipList.printContents();
+		skipList.printNodes();
 	}
 	
 	public static void main(String[] args) {

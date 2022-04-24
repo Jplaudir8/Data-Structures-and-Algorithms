@@ -114,7 +114,7 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E> {
 		return this.size;
 	}
     
-    public void printContents() {
+    public void printNodes() {
         SkipNode currNode = this.head;
 //        while (true) {
 //            if (currNode.forward[0] == null)
