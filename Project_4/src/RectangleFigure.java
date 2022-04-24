@@ -83,7 +83,7 @@ public class RectangleFigure {
 	}
 	
 	public String toString() {
-		return "(" + name + ", " + xCoord + ", " + yCoord + ", " + width + ", "
-				+ height + ")";
+		return name + ", " + xCoord + ", " + yCoord + ", " + width + ", "
+				+ height;
 	}
 }

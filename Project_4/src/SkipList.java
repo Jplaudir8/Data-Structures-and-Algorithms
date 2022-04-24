@@ -125,9 +125,11 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E> {
 //        }
         
         // this loop will remain if head pointer is needed in the output...
+        System.out.println("SkipList dump:");
         while (currNode != null) {
-        	System.out.println("Node has depth " + currNode.forward.length + ", Value " + currNode.element() );
+        	System.out.println("Node has depth " + currNode.forward.length + ", Value (" + currNode.element() + ")");
         	currNode = currNode.forward[0];
         }
+        System.out.println("SkipList size is: " + size());
     }
 }
