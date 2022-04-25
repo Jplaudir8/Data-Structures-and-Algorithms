@@ -37,8 +37,6 @@ public class Rectangle1 {
 	// implementing methods:
 	// remove(name)
 	// remove(x, y, w, h)
-	// regionsearch(x, y, w, h)
-	// intersections()
 	
 	public Rectangle1 () {
 		skipList = new SkipList<>();
