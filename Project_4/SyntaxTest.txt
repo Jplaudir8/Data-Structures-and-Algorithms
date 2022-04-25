@@ -4,11 +4,16 @@ insert r_r          -1 -20 3 4
 insert virtual_rec0 1 1 0 0
 insert b 0 0 11 12
 insert b 0 2 11 12
-insert b 4 8 99 16
-insert c 1 1 13 1023
-insert a 20 0 11 30
+insert b 4 8 9 7
+insert c 80 80 40 40
+insert a 70 70 30 30
 insert inExistRec_0 1 1 13 1024
 
 dump
 
 search x
+
+regionsearch 1 1 10 18
+
+
+intersections

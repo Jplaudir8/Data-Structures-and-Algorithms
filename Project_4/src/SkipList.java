@@ -1,6 +1,8 @@
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
-class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E> {
+class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E>, Iterable<E> {
 
 	public class SkipNode<K extends Comparable<K>, E> {
 		private KVPair<K, E> rec;
@@ -104,6 +106,7 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E> {
 				currNode = currNode.forward[i]; // Go one last step
 		currNode = currNode.forward[0]; // Move to actual record, if it exists
 		SinglyLinkedList<E> rectList = new SinglyLinkedList<>();
+		// Collect all matches
 		while ((currNode != null) && (currNode.key().compareTo(key) == 0)) {
 			rectList.addLast(currNode.element());
 			currNode = currNode.forward[0];
@@ -133,5 +136,41 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E> {
         	currNode = currNode.forward[0];
         }
         System.out.println("SkipList size is: " + size());
+    }
+
+	
+    @Override
+	public Iterator<E> iterator() {
+		return new SkipListIterator();
+	}
+    
+    public class SkipListIterator implements Iterator<E> {
+
+    	SkipNode currNode = head;
+    	
+		@Override
+		public boolean hasNext() {
+			if (currNode == null && head.forward[0] != null) {
+				return true;
+			} else if (currNode != null) {
+				return currNode.forward[0] != null;
+			}
+			
+			return false;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public E next() {
+			if (currNode == null && head.forward[0] != null) {
+				currNode = head.forward[0];
+				return (E) currNode.element();
+			} else if (currNode != null) {
+				currNode = currNode.forward[0];
+				return (E) currNode.element();
+			}
+			throw new NoSuchElementException();
+		}
+    	
     }
 }

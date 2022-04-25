@@ -58,7 +58,10 @@ public class Command {
 				// remove(x, y, w, h)
 			}
 		} else if (currentLineArr[0].equals("regionsearch")) {
-			// regionsearch(x, y, w, h)
+			rectangle.regionSearch(Integer.valueOf(currentLineArr[1]), 
+					Integer.valueOf(currentLineArr[2]), 
+					Integer.valueOf(currentLineArr[3]), 
+					Integer.valueOf(currentLineArr[4]));
 		} else if (currentLineArr[0].equals("intersections")) {
 			// intersections()
 		} else if (currentLineArr[0].equals("search")) {

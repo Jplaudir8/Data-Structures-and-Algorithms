@@ -21,8 +21,24 @@ public class RectangleFigure {
 		System.out.println("Rectangle inserted: (" + name + ", " + xCoord + ", " + yCoord + ", " + width + ", "
 				+ height + ")\n");	
 	}
+	
+	public int getxCoord() {
+		return xCoord;
+	}
 
-	public boolean validProperties(String name, int xCoord, int yCoord, int width, int height) {
+	public int getyCoord() {
+		return yCoord;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+	
+	private boolean validProperties(String name, int xCoord, int yCoord, int width, int height) {
 
 		// Check correctness of naming format
 		if (!nameIsValid(name)) {
@@ -86,4 +102,5 @@ public class RectangleFigure {
 		return name + ", " + xCoord + ", " + yCoord + ", " + width + ", "
 				+ height;
 	}
+	
 }

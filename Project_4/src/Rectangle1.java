@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Iterator;
 import java.util.Scanner;
 
 //On my honor:
@@ -31,18 +32,16 @@ import java.util.Scanner;
  */
 public class Rectangle1 {
 	
-	private SkipList skipList;
+	private SkipList<String, RectangleFigure> skipList;
 	
 	// implementing methods:
-	// insert(name, x, y, w, h),
 	// remove(name)
 	// remove(x, y, w, h)
 	// regionsearch(x, y, w, h)
 	// intersections()
-	// search(name)
 	
 	public Rectangle1 () {
-		skipList = new SkipList();
+		skipList = new SkipList<>();
 	}
 	
 	public void insert(String name, int x, int y, int w, int h) {
@@ -64,12 +63,81 @@ public class Rectangle1 {
 		
 	}
 	
-	public void regionSearch(int x, int y, int w, int height) {
+	public void regionSearch(int x, int y, int width, int height) {
+		// validate params
+		if (width <= 0 || height <= 0) {
+			System.out.println("Rectangle rejected: (" + x + ", " + y + ", " + width + ", " + height + ")");
+			return;
+		}
 		
+		// bottom left and top right coordinates of region search rectangle
+		int bottomLeft1_x = x;
+		int bottomLeft1_y = y;
+		int topRight1_x = x + width;
+		int topRight1_y = y + height;
+		
+		System.out.println("Rectangles intersecting region (" + x + ", " + y + ", " + width + ", " + height + "):");
+		// iterate through elements and print if intersects
+		Iterator<RectangleFigure> itr = skipList.iterator();
+		while (itr.hasNext()) {
+			// bottom left and top right coordinates of current rectangle
+			RectangleFigure currRect = itr.next();
+			int bottomLeft2_x = currRect.getxCoord();
+			int bottomLeft2_y = currRect.getyCoord();
+			int topRight2_x = currRect.getxCoord() + currRect.getWidth();
+			int topRight2_y = currRect.getyCoord() + currRect.getHeight();
+			
+			// skip non-intersects
+			if (bottomLeft1_x > topRight2_x || topRight1_x < bottomLeft2_x) {
+				continue;
+			}
+			
+			if (bottomLeft1_y > topRight2_y || topRight1_y < bottomLeft2_y) {
+				continue;
+			}
+			System.out.println(currRect); // print intersect
+		}
 	}
 	
 	public void intersections() {
-		
+		System.out.println("Intersection pairs:");
+		Iterator<RectangleFigure> outterItr = skipList.iterator();
+		while (outterItr.hasNext()) {
+			RectangleFigure outterRect = outterItr.next();
+			Iterator<RectangleFigure> innerItr = skipList.iterator();
+			while (outterItr.hasNext()) {
+				// if both point to same object, skip
+				if (outterItr == innerItr) {
+					continue;
+				}
+				RectangleFigure innerRect = innerItr.next();
+				
+				// iterate through elements and print if intersect
+				// outterRect corners
+				int bottomLeft1_x = outterRect.getxCoord();
+				int bottomLeft1_y = outterRect.getyCoord();
+				int topRight1_x = outterRect.getxCoord() + outterRect.getWidth();
+				int topRight1_y = outterRect.getyCoord() + outterRect.getHeight();
+				
+				
+				// innerRect corners
+				int bottomLeft2_x = innerRect.getxCoord();
+				int bottomLeft2_y = innerRect.getyCoord();
+				int topRight2_x = innerRect.getxCoord() + innerRect.getWidth();
+				int topRight2_y = innerRect.getyCoord() + innerRect.getHeight();
+				
+				// skip non-intersects
+				if (bottomLeft1_x > topRight2_x || topRight1_x < bottomLeft2_x) {
+					continue;
+				}
+				
+				if (bottomLeft1_y > topRight2_y || topRight1_y < bottomLeft2_y) {
+					continue;
+				}
+				
+				System.out.println("(" + outterRect + " | " + innerRect + ")");
+			}
+		}
 	}
 	
 	
@@ -83,7 +151,7 @@ public class Rectangle1 {
 				currNode = currNode.getNext();
 			}			
 		} else {
-			System.out.print("Rectangle not found: " + rectangleName);
+			System.out.println("Rectangle not found: " + rectangleName);
 		}
 	}
 	
