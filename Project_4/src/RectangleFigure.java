@@ -22,6 +22,10 @@ public class RectangleFigure {
 				+ height + ")\n");	
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	public int getxCoord() {
 		return xCoord;
 	}

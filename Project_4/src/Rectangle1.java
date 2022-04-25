@@ -68,7 +68,20 @@ public class Rectangle1 {
 	}
 	
 	public void remove(int x, int y, int width, int height) {
-		
+		Iterator<RectangleFigure> itr = skipList.iterator();
+		while (itr.hasNext()) {
+			RectangleFigure currRect = itr.next();
+			// if exists, remove it
+			if (currRect.getxCoord() == x && 
+					currRect.getyCoord() == y && 
+					currRect.getWidth() == width &&
+					currRect.getHeight() == height) {
+				RectangleFigure rectRemoved = skipList.remove(currRect.getName());
+				System.out.println("Rectangle removed: (" + rectRemoved + ")");
+				return;
+			}
+		}
+		System.out.println("Rectangle not found: (" + x + ", " + y + ", " + width + ", " + height + ")");
 	}
 	
 	public void regionSearch(int x, int y, int width, int height) {

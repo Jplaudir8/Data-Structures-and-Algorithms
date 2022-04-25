@@ -20,5 +20,5 @@ regionsearch 1 1 10 18
 
 intersections
 
-remove c
+remove 80 80 40 40
 dump

@@ -15,9 +15,6 @@ public interface Dictionary<K, E> {
 	      with key "k" exists. */
 	  public E remove(K key);
 
-	  /** Remove and return an arbitrary record from dictionary.
-	      @return the record removed, or null if none exists. */
-	  public E removeAny();
 
 	  /** @return A record matching "k" (null if none exists).
 	      If multiple records match, return an arbitrary one.

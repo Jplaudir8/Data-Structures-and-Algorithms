@@ -48,7 +48,6 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E>, Iterable
 		return lev;
 	}
 
-
 	private void adjustHead(int newLevel) {
 		SkipNode<K, E> temp = head;
 		head = new SkipNode<K, E>(null, null, newLevel);
@@ -85,7 +84,6 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E>, Iterable
 		size++; // Increment dictionary size
 	}
 
-	
 	@Override
 	public E remove(K key) {
 		SkipNode<K, E> currNode = head; // Dummy header node
@@ -98,16 +96,16 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E>, Iterable
 		}
 		prevNode = currNode;
 		currNode = currNode.forward[0]; // currNode is now node to remove
-		
+
 		// if current node is null, we did not find anything
 		if (currNode == null) {
 			return null;
 		}
-		
+
 		// check all references that prevNode has
 		for (int i = 0; i < prevNode.forward.length; i++) {
 			// if at ith level prevNode points to currNode, re reference to next
-			if (prevNode.forward[i] == currNode) { 
+			if (prevNode.forward[i] == currNode) {
 				prevNode.forward[i] = currNode.forward[i];
 			}
 		}
@@ -116,12 +114,6 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E>, Iterable
 		return currNode.element();
 	}
 
-	@Override
-	public E removeAny() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	@Override
 	public SinglyLinkedList<E> find(K key) {
 		SkipNode<K, E> currNode = head; // Dummy header node
@@ -142,27 +134,26 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E>, Iterable
 	public int size() {
 		return this.size;
 	}
-    
-    public void printNodes() {
-        SkipNode currNode = this.head;
-        System.out.println("SkipList dump:");
-        while (currNode != null) {
-        	System.out.println("Node has depth " + currNode.forward.length + ", Value (" + currNode.element() + ")");
-        	currNode = currNode.forward[0];
-        }
-        System.out.println("SkipList size is: " + size());
-    }
 
-	
-    @Override
+	public void printNodes() {
+		SkipNode currNode = this.head;
+		System.out.println("SkipList dump:");
+		while (currNode != null) {
+			System.out.println("Node has depth " + currNode.forward.length + ", Value (" + currNode.element() + ")");
+			currNode = currNode.forward[0];
+		}
+		System.out.println("SkipList size is: " + size());
+	}
+
+	@Override
 	public Iterator<E> iterator() {
 		return new SkipListIterator();
 	}
-    
-    public class SkipListIterator implements Iterator<E> {
 
-    	SkipNode currNode = head;
-    	
+	public class SkipListIterator implements Iterator<E> {
+
+		SkipNode currNode = head;
+
 		@Override
 		public boolean hasNext() {
 			if (currNode == null && head.forward[0] != null) {
@@ -170,7 +161,7 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E>, Iterable
 			} else if (currNode != null) {
 				return currNode.forward[0] != null;
 			}
-			
+
 			return false;
 		}
 
@@ -186,6 +177,6 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E>, Iterable
 			}
 			throw new NoSuchElementException();
 		}
-    	
-    }
+
+	}
 }

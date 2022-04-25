@@ -55,7 +55,10 @@ public class Command {
 				rectangle.remove(currentLineArr[1]);
 			} else {
 				// remove by matching coordinates + dimensions
-				// remove(x, y, w, h)
+				rectangle.remove(Integer.valueOf(currentLineArr[1]), 
+						Integer.valueOf(currentLineArr[2]),
+						Integer.valueOf(currentLineArr[3]),
+						Integer.valueOf(currentLineArr[4]));
 			}
 		} else if (currentLineArr[0].equals("regionsearch")) {
 			rectangle.regionSearch(Integer.valueOf(currentLineArr[1]), 
