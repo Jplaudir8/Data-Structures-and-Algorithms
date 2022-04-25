@@ -53,8 +53,18 @@ public class Rectangle1 {
 		}
 	}
 	
+	/**
+	 * Remove rectangle with input name, if there is more than one match, remove the first found.
+	 * @param name
+	 */
 	public void remove(String name) {
+		RectangleFigure removedRectangle = skipList.remove(name);
 		
+		if (removedRectangle == null) {
+			System.out.println("Rectangle not found: " + name);
+		} else {
+			System.out.println("Rectangle removed: (" + removedRectangle + ")");
+		}
 	}
 	
 	public void remove(int x, int y, int width, int height) {

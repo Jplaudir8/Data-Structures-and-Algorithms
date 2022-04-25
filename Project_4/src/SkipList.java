@@ -88,8 +88,32 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E>, Iterable
 	
 	@Override
 	public E remove(K key) {
-		// TODO Auto-generated method stub
-		return null;
+		SkipNode<K, E> currNode = head; // Dummy header node
+		SkipNode<K, E> prevNode = null;
+		for (int i = level; i >= 0; i--) { // For each level...
+			while ((currNode.forward[i] != null) && (currNode.forward[i].key().compareTo(key) < 0)) { // go forward
+				prevNode = currNode;
+				currNode = currNode.forward[i]; // Go one last step
+			}
+		}
+		prevNode = currNode;
+		currNode = currNode.forward[0]; // currNode is now node to remove
+		
+		// if current node is null, we did not find anything
+		if (currNode == null) {
+			return null;
+		}
+		
+		// check all references that prevNode has
+		for (int i = 0; i < prevNode.forward.length; i++) {
+			// if at ith level prevNode points to currNode, re reference to next
+			if (prevNode.forward[i] == currNode) { 
+				prevNode.forward[i] = currNode.forward[i];
+			}
+		}
+		// update size
+		this.size--;
+		return currNode.element();
 	}
 
 	@Override

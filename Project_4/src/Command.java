@@ -52,7 +52,7 @@ public class Command {
 		} else if (currentLineArr[0].equals("remove")) {
 			if (currentLineArr.length == 2) {
 				// remove by matching name
-				// remove(name)
+				rectangle.remove(currentLineArr[1]);
 			} else {
 				// remove by matching coordinates + dimensions
 				// remove(x, y, w, h)
