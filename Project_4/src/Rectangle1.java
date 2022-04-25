@@ -105,12 +105,12 @@ public class Rectangle1 {
 		while (outterItr.hasNext()) {
 			RectangleFigure outterRect = outterItr.next();
 			Iterator<RectangleFigure> innerItr = skipList.iterator();
-			while (outterItr.hasNext()) {
+			while (innerItr.hasNext()) {
+				RectangleFigure innerRect = innerItr.next();
 				// if both point to same object, skip
-				if (outterItr == innerItr) {
+				if (outterRect == innerRect) {
 					continue;
 				}
-				RectangleFigure innerRect = innerItr.next();
 				
 				// iterate through elements and print if intersect
 				// outterRect corners

@@ -63,7 +63,7 @@ public class Command {
 					Integer.valueOf(currentLineArr[3]), 
 					Integer.valueOf(currentLineArr[4]));
 		} else if (currentLineArr[0].equals("intersections")) {
-			// intersections()
+			rectangle.intersections();
 		} else if (currentLineArr[0].equals("search")) {
 			rectangle.search(currentLineArr[1]);
 		} else if (currentLineArr[0].equals("dump")) {
