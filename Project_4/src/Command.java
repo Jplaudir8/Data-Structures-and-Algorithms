@@ -37,16 +37,16 @@ public class Command {
 			return;
 		}
 		
-		String[] currentLineArr = cmd.toLowerCase().trim().split(" +");
+		String[] currentLineArr = cmd.trim().split(" +");
 		
-		if (currentLineArr[0].equals("insert")) {
+		if (currentLineArr[0].toLowerCase().equals("insert")) {
 			rectangle.insert(currentLineArr[1], 
 					Integer.valueOf(currentLineArr[2]), 
 					Integer.valueOf(currentLineArr[3]), 
 					Integer.valueOf(currentLineArr[4]), 
 					Integer.valueOf(currentLineArr[5])
 					);
-		} else if (currentLineArr[0].equals("remove")) {
+		} else if (currentLineArr[0].toLowerCase().equals("remove")) {
 			if (currentLineArr.length == 2) {
 				// remove by matching name
 				rectangle.remove(currentLineArr[1]);
@@ -57,16 +57,16 @@ public class Command {
 						Integer.valueOf(currentLineArr[3]),
 						Integer.valueOf(currentLineArr[4]));
 			}
-		} else if (currentLineArr[0].equals("regionsearch")) {
+		} else if (currentLineArr[0].toLowerCase().equals("regionsearch")) {
 			rectangle.regionSearch(Integer.valueOf(currentLineArr[1]), 
 					Integer.valueOf(currentLineArr[2]), 
 					Integer.valueOf(currentLineArr[3]), 
 					Integer.valueOf(currentLineArr[4]));
-		} else if (currentLineArr[0].equals("intersections")) {
+		} else if (currentLineArr[0].toLowerCase().equals("intersections")) {
 			rectangle.intersections();
-		} else if (currentLineArr[0].equals("search")) {
+		} else if (currentLineArr[0].toLowerCase().equals("search")) {
 			rectangle.search(currentLineArr[1]);
-		} else if (currentLineArr[0].equals("dump")) {
+		} else if (currentLineArr[0].toLowerCase().equals("dump")) {
 			rectangle.dump();
 		}
 		
