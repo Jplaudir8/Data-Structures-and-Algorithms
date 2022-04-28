@@ -49,7 +49,7 @@ public class Rectangle1 {
 			skipList.insert(name, newRectangle);
 		} catch(IllegalArgumentException e) {
 			System.out.println("Rectangle rejected: (" + name + ", " + x + ", " + y + ", " + w + ", "
-					+ h + ")\n");
+					+ h + ")");
 		}
 	}
 	
@@ -61,13 +61,17 @@ public class Rectangle1 {
 		RectangleFigure removedRectangle = skipList.remove(name);
 		
 		if (removedRectangle == null) {
-			System.out.println("Rectangle not found: " + name);
+			System.out.println("Rectangle not removed: " + name);
 		} else {
 			System.out.println("Rectangle removed: (" + removedRectangle + ")");
 		}
 	}
 	
 	public void remove(int x, int y, int width, int height) {
+		if (width <= 0 || height <= 0) {
+			System.out.println("Rectangle rejected: (" + x + ", " + y + ", " + width + ", " + height + ")");
+			return;
+		}
 		Iterator<RectangleFigure> itr = skipList.iterator();
 		while (itr.hasNext()) {
 			RectangleFigure currRect = itr.next();
@@ -163,7 +167,7 @@ public class Rectangle1 {
 	
 	
 	public void search(String rectangleName) {
-		System.out.println("search " + rectangleName);
+		// System.out.println("search " + rectangleName);
 		SinglyLinkedList<RectangleFigure> rectList = skipList.find(rectangleName);
 		if (rectList != null) {
 			SinglyLinkedList<RectangleFigure>.ListNode<RectangleFigure> currNode = rectList.getHead();
