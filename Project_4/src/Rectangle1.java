@@ -85,7 +85,7 @@ public class Rectangle1 {
 				return;
 			}
 		}
-		System.out.println("Rectangle not found: (" + x + ", " + y + ", " + width + ", " + height + ")");
+		System.out.println("Rectangle not removed: (" + x + ", " + y + ", " + width + ", " + height + ")");
 	}
 	
 	public void regionSearch(int x, int y, int width, int height) {
