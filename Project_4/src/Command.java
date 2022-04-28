@@ -36,13 +36,10 @@ public class Command {
 		if (cmd.trim().length() == 0) {
 			return;
 		}
-
-		// Developing method calls for:
 		
 		String[] currentLineArr = cmd.toLowerCase().trim().split(" +");
 		
 		if (currentLineArr[0].equals("insert")) {
-			// insert(name, x, y, w, h),
 			rectangle.insert(currentLineArr[1], 
 					Integer.valueOf(currentLineArr[2]), 
 					Integer.valueOf(currentLineArr[3]), 

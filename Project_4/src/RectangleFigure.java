@@ -7,25 +7,24 @@ public class RectangleFigure {
 	private int height;
 
 	public RectangleFigure(String name, int xCoord, int yCoord, int width, int height) {
-		System.out.println("insert " + name + " " + xCoord + " " + yCoord + " " + width + " " + height);
 		if (!validProperties(name, xCoord, yCoord, width, height)) {
 			throw new IllegalArgumentException();
 		}
-		
+
 		this.name = name;
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
 		this.width = width;
 		this.height = height;
-		
-		System.out.println("Rectangle inserted: (" + name + ", " + xCoord + ", " + yCoord + ", " + width + ", "
-				+ height + ")\n");	
+
+		System.out.println(
+				"Rectangle inserted: (" + name + ", " + xCoord + ", " + yCoord + ", " + width + ", " + height + ")");
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public int getxCoord() {
 		return xCoord;
 	}
@@ -41,7 +40,7 @@ public class RectangleFigure {
 	public int getHeight() {
 		return height;
 	}
-	
+
 	private boolean validProperties(String name, int xCoord, int yCoord, int width, int height) {
 
 		// Check correctness of naming format
@@ -81,7 +80,7 @@ public class RectangleFigure {
 	private boolean nameIsValid(String rectName) {
 		if (rectName.length() < 1) {
 			// Requires at least one character
-			//System.out.println("less than 1");
+			// System.out.println("less than 1");
 			return false;
 		}
 
@@ -90,21 +89,21 @@ public class RectangleFigure {
 			int currChar = rectName.charAt(i);
 			// if first character is not a letter
 			if (i == 0 && !Character.isLetter(currChar)) {
-				//System.out.println("first character is not a letter");
+				// System.out.println("first character is not a letter");
 				return false;
 			}
 
 			if (i >= 1 && !Character.isLetterOrDigit(currChar) && currChar != '_') {
-				//System.out.println("some remaining character is not a letter, digit neither _");
+				// System.out.println("some remaining character is not a letter, digit neither
+				// _");
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	public String toString() {
-		return name + ", " + xCoord + ", " + yCoord + ", " + width + ", "
-				+ height;
+		return name + ", " + xCoord + ", " + yCoord + ", " + width + ", " + height;
 	}
-	
+
 }
