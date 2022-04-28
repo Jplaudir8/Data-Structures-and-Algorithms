@@ -68,7 +68,7 @@ public class Rectangle1 {
 	}
 	
 	public void remove(int x, int y, int width, int height) {
-		if (width <= 0 || height <= 0) {
+		if (x < 0 || y < 0 || width <= 0 || height <= 0) {
 			System.out.println("Rectangle rejected: (" + x + ", " + y + ", " + width + ", " + height + ")");
 			return;
 		}
