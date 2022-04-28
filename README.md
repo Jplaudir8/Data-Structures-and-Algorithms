@@ -1,10 +1,10 @@
 # Data-Structures-and-Algorithms
 
-### Project 1
+### Project 1 - Big Numbers Calculator
 
-This is a calculator of integer numbers that can have a size bigger than normal 32-bit and 64-bit integers. Possible operations that it can hold are: Addition, Multiplication and Exponentiation.
+This is a calculator of integer numbers that can have a size bigger than normal 32-bit and 64-bit integers. Possible operations that it can hold are: Addition, Multiplication and Exponentiation. A linked-list is used as part of the implementation.
 
-### Project 2
+### Project 2 - DNA Trie-like Database
 
 The DNAtree class represents a Trie-like data structure that stores DNA sequences as String objects.
 
