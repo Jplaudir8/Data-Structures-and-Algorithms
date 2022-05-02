@@ -23,4 +23,6 @@ public interface Dictionary<K, E> {
 
 	  /** @return The number of records in the dictionary. */
 	  public int size();
+
+	  
 }

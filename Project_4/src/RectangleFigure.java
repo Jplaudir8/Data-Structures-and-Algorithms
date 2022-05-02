@@ -106,4 +106,21 @@ public class RectangleFigure {
 		return name + ", " + xCoord + ", " + yCoord + ", " + width + ", " + height;
 	}
 
+	public boolean equals(RectangleFigure that) {
+		if (this == null) {
+			return false;
+		}
+		if (this == that) {
+			return true;
+		}
+		if (that instanceof RectangleFigure) {
+
+			if (this.name.equals(that.name) && this.xCoord == that.xCoord && this.yCoord == that.yCoord
+					&& this.width == that.width && this.height == that.height) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }

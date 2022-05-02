@@ -67,26 +67,60 @@ public class Rectangle1 {
 		}
 	}
 	
+//	public void remove(int x, int y, int width, int height) {
+//		if (x < 0 || y < 0 || width <= 0 || height <= 0) {
+//			System.out.println("Rectangle rejected: (" + x + ", " + y + ", " + width + ", " + height + ")");
+//			return;
+//		}
+//		Iterator<RectangleFigure> itr = skipList.iterator();
+//		
+//		while (itr.hasNext()) {
+//			RectangleFigure currRect = itr.next();
+//			// if exists, remove it
+//			if (currRect.getxCoord() == x && 
+//					currRect.getyCoord() == y && 
+//					currRect.getWidth() == width &&
+//					currRect.getHeight() == height) {
+//				RectangleFigure rectRemoved = skipList.remove(currRect.getName()); // this might remove another rect with this name
+//				System.out.println("Rectangle removed: (" + rectRemoved + ")");
+//				return;
+//			}
+//		}
+//		System.out.println("Rectangle not removed: (" + x + ", " + y + ", " + width + ", " + height + ")");
+//	}
+	
 	public void remove(int x, int y, int width, int height) {
+		// check validity of rectangle
 		if (x < 0 || y < 0 || width <= 0 || height <= 0) {
 			System.out.println("Rectangle rejected: (" + x + ", " + y + ", " + width + ", " + height + ")");
 			return;
 		}
+		
+		// Recreate that rectangle object, rectangle's name would be missing so...
 		Iterator<RectangleFigure> itr = skipList.iterator();
+		String nameToFind = "";
 		while (itr.hasNext()) {
 			RectangleFigure currRect = itr.next();
-			// if exists, remove it
+			// if matches coords and dimensions, get the name
 			if (currRect.getxCoord() == x && 
 					currRect.getyCoord() == y && 
 					currRect.getWidth() == width &&
 					currRect.getHeight() == height) {
-				RectangleFigure rectRemoved = skipList.remove(currRect.getName());
-				System.out.println("Rectangle removed: (" + rectRemoved + ")");
-				return;
+				nameToFind = currRect.getName();
+				break;
 			}
 		}
-		System.out.println("Rectangle not removed: (" + x + ", " + y + ", " + width + ", " + height + ")");
+		
+		// Now that we have the complete object, remove by object
+		RectangleFigure removedRectangle = skipList.removeByElement(new RectangleFigure(nameToFind, x, y, width, height));
+		
+		if (removedRectangle != null) {
+			System.out.println("Rectangle removed: (" + removedRectangle + ")");
+		} else {
+			System.out.println("Rectangle not removed: (" + x + ", " + y + ", " + width + ", " + height + ")");
+		}
 	}
+	
 	
 	public void regionSearch(int x, int y, int width, int height) {
 		// validate params
@@ -127,23 +161,28 @@ public class Rectangle1 {
 	public void intersections() {
 		System.out.println("Intersection pairs:");
 		Iterator<RectangleFigure> outterItr = skipList.iterator();
+		
 		while (outterItr.hasNext()) {
+			
 			RectangleFigure outterRect = outterItr.next();
+			System.out.println("outter iterator w/ rect: " + outterRect + " compares to:");
+			
+			// outterRect corners
+			int bottomLeft1_x = outterRect.getxCoord();
+			int bottomLeft1_y = outterRect.getyCoord();
+			int topRight1_x = outterRect.getxCoord() + outterRect.getWidth();
+			int topRight1_y = outterRect.getyCoord() + outterRect.getHeight();
+			
 			Iterator<RectangleFigure> innerItr = skipList.iterator();
+			
 			while (innerItr.hasNext()) {
 				RectangleFigure innerRect = innerItr.next();
+				System.out.println("\t inner rect: " + innerRect);
 				// if both point to same object, skip
 				if (outterRect == innerRect) {
+					System.out.println("\t\tskip rectangle ^ its the same one");
 					continue;
 				}
-				
-				// iterate through elements and print if intersect
-				// outterRect corners
-				int bottomLeft1_x = outterRect.getxCoord();
-				int bottomLeft1_y = outterRect.getyCoord();
-				int topRight1_x = outterRect.getxCoord() + outterRect.getWidth();
-				int topRight1_y = outterRect.getyCoord() + outterRect.getHeight();
-				
 				
 				// innerRect corners
 				int bottomLeft2_x = innerRect.getxCoord();
@@ -152,16 +191,17 @@ public class Rectangle1 {
 				int topRight2_y = innerRect.getyCoord() + innerRect.getHeight();
 				
 				// skip non-intersects
-				if (bottomLeft1_x > topRight2_x || topRight1_x < bottomLeft2_x) {
+				if (bottomLeft1_x >= topRight2_x || topRight1_x <= bottomLeft2_x) {
 					continue;
 				}
 				
-				if (bottomLeft1_y > topRight2_y || topRight1_y < bottomLeft2_y) {
+				if (bottomLeft1_y >= topRight2_y || topRight1_y <= bottomLeft2_y) {
 					continue;
 				}
 				
 				System.out.println("(" + outterRect + " | " + innerRect + ")");
 			}
+			System.out.println("");
 		}
 	}
 	

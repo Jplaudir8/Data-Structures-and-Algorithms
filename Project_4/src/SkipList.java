@@ -113,7 +113,93 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E>, Iterable
 		this.size--;
 		return currNode.element();
 	}
+	
+	public E removeByElement(E element) {
+		SkipNode<K, E> currNode = this.head;
+		 
+		SkipNode<K, E> toRemove = searchSkipNode(element);
+		
+		if (toRemove == null) {
+			return null; // not found
+		}
+		
+//		SkipNode<K, E>[] replace = toRemove.forward;
+		
+        int currentLevel = currNode.forward.length - 1;
+        while (currNode != null) {
 
+            for (int i = currentLevel; i >= 0; i--) { // traverses the list
+                if (currNode.forward[i] != null) {
+                    /*
+                     * Every time there is a reference to the node as given
+                     * by the key, replaces the pointers such that node is
+                     * removed 
+                     */
+                    if ((currNode.forward[i] == toRemove))
+                        currNode.forward[i] = toRemove.forward[i];
+                }
+
+            }
+
+            currNode = currNode.forward[0]; // Moves node forward by one
+            if (currNode != null) // Gets new depth if x does not equal null
+                currentLevel = currNode.forward.length - 1;
+        }
+
+        this.size--;
+        return element;
+	}
+	
+	private SkipNode<K, E> searchSkipNode(E element){
+		SkipNode<K, E> node = head; // Start at start of list
+        int currentLevel = level - 1;
+        
+        /*
+         * This is for traversing the skip list when the largest depth size
+         * is not one
+         */
+        if (node.forward.length != 1) {
+            while (node != null) { // Traverses skip list
+
+                // Checks each pointer in skip node
+                for (int i = currentLevel; i >= 0; i--) { 
+                    if (node.forward[i] != null) {
+                        // if it found a matching node
+                        if (element.equals(node.forward[i].element())) {
+                            node = node.forward[i];
+                            return node;
+                        }
+                    }
+                }
+
+                node = node.forward[0]; //moves one node
+                /*
+                 * If there are more nodes in the skip list, 
+                 */
+                if (node != null) { 
+                    currentLevel = node.forward.length - 1;
+                }
+            }
+        } 
+        /*  
+         * For traversing the skip list when each node of the skip list
+         * only has a depth of one
+         */
+        else {
+            while (node != null) {
+                if (node.forward[0] == null)
+                    return null; // if not found
+                if (element.equals(node.forward[0].element())) { // if found
+                    node = node.forward[0]; // moves one node
+                    return node; //returns result
+                }
+                node = node.forward[0]; //moves one node forward
+
+            }
+        }
+        return null; // if not found
+	}
+	
 	@Override
 	public SinglyLinkedList<E> find(K key) {
 		SkipNode<K, E> currNode = head; // Dummy header node
