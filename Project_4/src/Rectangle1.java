@@ -98,7 +98,7 @@ public class Rectangle1 {
 		
 		// Recreate that rectangle object, rectangle's name would be missing so...
 		Iterator<RectangleFigure> itr = skipList.iterator();
-		String nameToFind = "";
+		String nameToFind = null;
 		while (itr.hasNext()) {
 			RectangleFigure currRect = itr.next();
 			// if matches coords and dimensions, get the name
@@ -109,6 +109,11 @@ public class Rectangle1 {
 				nameToFind = currRect.getName();
 				break;
 			}
+		}
+		
+		if (nameToFind == null) {
+			System.out.println("Rectangle not removed: (" + x + ", " + y + ", " + width + ", " + height + ")");
+			return;
 		}
 		
 		// Now that we have the complete object, remove by object

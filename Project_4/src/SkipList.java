@@ -84,35 +84,79 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E>, Iterable
 		size++; // Increment dictionary size
 	}
 
+//	@Override
+//	public E remove(K key) {
+//		SkipNode<K, E> currNode = head; // Dummy header node
+//		SkipNode<K, E> prevNode = null;
+//		for (int i = level; i >= 0; i--) { // For each level...
+//			while ((currNode.forward[i] != null) && (currNode.forward[i].key().compareTo(key) < 0)) { // go forward
+//				prevNode = currNode;
+//				currNode = currNode.forward[i]; // Go one last step
+//			}
+//		}
+//		prevNode = currNode;
+//		currNode = currNode.forward[0]; // currNode is now node to remove
+//
+//		// if current node is null, we did not find anything
+//		if (currNode == null) {
+//			return null;
+//		}
+//
+//		// check all references that prevNode has
+//		for (int i = 0; i < prevNode.forward.length; i++) {
+//			// if at ith level prevNode points to currNode, re reference to next
+//			if (prevNode.forward[i] == currNode) {
+//				prevNode.forward[i] = currNode.forward[i];
+//			}
+//		}
+//		// update size
+//		this.size--;
+//		return currNode.element();
+//	}
+	
 	@Override
 	public E remove(K key) {
-		SkipNode<K, E> currNode = head; // Dummy header node
-		SkipNode<K, E> prevNode = null;
-		for (int i = level; i >= 0; i--) { // For each level...
-			while ((currNode.forward[i] != null) && (currNode.forward[i].key().compareTo(key) < 0)) { // go forward
-				prevNode = currNode;
-				currNode = currNode.forward[i]; // Go one last step
-			}
-		}
-		prevNode = currNode;
-		currNode = currNode.forward[0]; // currNode is now node to remove
+		SkipNode<K, E> x = head;
+        SkipNode<K, E> y = searchNode(key);
+        if (y == null) // if no node can be found
+            return null;
+        SkipNode<K, E>[] replace = y.forward;
+        int currentLevel = x.forward.length - 1; // Gets level 
+        while (x != null) { // For traversing the skip list
 
-		// if current node is null, we did not find anything
-		if (currNode == null) {
-			return null;
-		}
+            for (int i = currentLevel; i >= 0; i--) { // traverses list
+                if (x.forward[i] != null) {
+                    /*
+                     * Every time there is a reference to the node as given
+                     * by the key, replaces the pointers such that node is
+                     * removed 
+                     */
+                    if ((x.forward[i] == y))
+                        x.forward[i] = replace[i];
+                }
+            }
 
-		// check all references that prevNode has
-		for (int i = 0; i < prevNode.forward.length; i++) {
-			// if at ith level prevNode points to currNode, re reference to next
-			if (prevNode.forward[i] == currNode) {
-				prevNode.forward[i] = currNode.forward[i];
-			}
-		}
-		// update size
-		this.size--;
-		return currNode.element();
+            x = x.forward[0]; // Move node forward by one
+            if (x != null) // Gets new depth if x does not equal null
+                currentLevel = x.forward.length - 1;
+        }
+        
+        size--;
+        return y.element(); // If removal is successful, return skip node
 	}
+	
+	private SkipNode<K, E> searchNode(K searchKey) {
+        SkipNode<K, E> x = head; // Dummy header node
+        for (int i = level; i >= 0; i--) // For each level...
+            while ((x.forward[i] != null) && // go forward
+                    (searchKey.compareTo(x.forward[i].key()) > 0))
+                x = x.forward[i]; // Go one last step
+        x = x.forward[0]; // Move to actual record, if it exists
+        if ((x != null) && (searchKey.compareTo(x.key()) == 0))
+            return x; // Node has been found
+        else
+            return null; // Not found
+    }
 	
 	public E removeByElement(E element) {
 		SkipNode<K, E> currNode = this.head;
