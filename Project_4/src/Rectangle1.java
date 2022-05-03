@@ -120,7 +120,6 @@ public class Rectangle1 {
 		
 		// Now that we have the complete object, remove by object
 		RectangleFigure removedRectangle = skipList.removeByElement(new RectangleFigure(nameToFind, x, y, width, height));
-		System.out.println("Found to remove: " + removedRectangle);
 		if (removedRectangle != null) {
 			System.out.println("Rectangle removed: (" + removedRectangle + ")");
 		} else {
