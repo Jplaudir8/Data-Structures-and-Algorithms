@@ -99,27 +99,26 @@ public class Rectangle1 {
 		
 		// Recreate that rectangle object, rectangle's name would be missing so...
 		Iterator<RectangleFigure> itr = skipList.iterator();
-		String nameToFind = null;
+		// String nameToFind = null;
+		RectangleFigure currRect = null;
 		while (itr.hasNext()) {
-			RectangleFigure currRect = itr.next();
+			currRect = itr.next();
 			// if matches coords and dimensions, get the name
 			if (currRect.getxCoord() == x && 
 					currRect.getyCoord() == y && 
 					currRect.getWidth() == width &&
 					currRect.getHeight() == height) {
-				nameToFind = currRect.getName();
 				break;
 			}
 		}
 		
-		
-		if (nameToFind == null) {
+		if (currRect == null) {
 			System.out.println("Rectangle not removed: (" + x + ", " + y + ", " + width + ", " + height + ")");
 			return;
 		}
 		
 		// Now that we have the complete object, remove by object
-		RectangleFigure removedRectangle = skipList.removeByElement(new RectangleFigure(nameToFind, x, y, width, height));
+		RectangleFigure removedRectangle = skipList.removeByElement(currRect);
 		if (removedRectangle != null) {
 			System.out.println("Rectangle removed: (" + removedRectangle + ")");
 		} else {
