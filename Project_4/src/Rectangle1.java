@@ -99,7 +99,6 @@ public class Rectangle1 {
 		
 		// Recreate that rectangle object, rectangle's name would be missing so...
 		Iterator<RectangleFigure> itr = skipList.iterator();
-		// String nameToFind = null;
 		RectangleFigure currRect = null;
 		while (itr.hasNext()) {
 			currRect = itr.next();
