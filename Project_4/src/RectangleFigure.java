@@ -1,3 +1,4 @@
+import java.util.Objects;
 
 public class RectangleFigure {
 	private String name;
@@ -16,9 +17,6 @@ public class RectangleFigure {
 		this.yCoord = yCoord;
 		this.width = width;
 		this.height = height;
-
-		System.out.println(
-				"Rectangle inserted: (" + name + ", " + xCoord + ", " + yCoord + ", " + width + ", " + height + ")");
 	}
 
 	public String getName() {
@@ -105,22 +103,26 @@ public class RectangleFigure {
 	public String toString() {
 		return name + ", " + xCoord + ", " + yCoord + ", " + width + ", " + height;
 	}
+	
 
-	public boolean equals(RectangleFigure that) {
-		if (this == null) {
-			return false;
-		}
-		if (this == that) {
-			return true;
-		}
-		if (that instanceof RectangleFigure) {
-
-			if (this.name.equals(that.name) && this.xCoord == that.xCoord && this.yCoord == that.yCoord
-					&& this.width == that.width && this.height == that.height) {
-				return true;
-			}
-		}
-		return false;
+	@Override
+	public int hashCode() {
+		return Objects.hash(height, name, width, xCoord, yCoord);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RectangleFigure other = (RectangleFigure) obj;
+		return height == other.height && Objects.equals(name, other.name) && width == other.width
+				&& xCoord == other.xCoord && yCoord == other.yCoord;
+	}
+	
+	
 
 }

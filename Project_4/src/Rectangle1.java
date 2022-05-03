@@ -47,6 +47,7 @@ public class Rectangle1 {
 			RectangleFigure newRectangle = new RectangleFigure(name, x, y, w, h);
 			// if object creation succeeded, insert rectangle
 			skipList.insert(name, newRectangle);
+			System.out.println("Rectangle inserted: (" + name + ", " + x + ", " + y + ", " + w + ", " + h + ")");
 		} catch(IllegalArgumentException e) {
 			System.out.println("Rectangle rejected: (" + name + ", " + x + ", " + y + ", " + w + ", "
 					+ h + ")");
@@ -111,6 +112,7 @@ public class Rectangle1 {
 			}
 		}
 		
+		
 		if (nameToFind == null) {
 			System.out.println("Rectangle not removed: (" + x + ", " + y + ", " + width + ", " + height + ")");
 			return;
@@ -118,7 +120,7 @@ public class Rectangle1 {
 		
 		// Now that we have the complete object, remove by object
 		RectangleFigure removedRectangle = skipList.removeByElement(new RectangleFigure(nameToFind, x, y, width, height));
-		
+		System.out.println("Found to remove: " + removedRectangle);
 		if (removedRectangle != null) {
 			System.out.println("Rectangle removed: (" + removedRectangle + ")");
 		} else {
@@ -170,7 +172,6 @@ public class Rectangle1 {
 		while (outterItr.hasNext()) {
 			
 			RectangleFigure outterRect = outterItr.next();
-			System.out.println("outter iterator w/ rect: " + outterRect + " compares to:");
 			
 			// outterRect corners
 			int bottomLeft1_x = outterRect.getxCoord();
@@ -182,10 +183,9 @@ public class Rectangle1 {
 			
 			while (innerItr.hasNext()) {
 				RectangleFigure innerRect = innerItr.next();
-				System.out.println("\t inner rect: " + innerRect);
+				
 				// if both point to same object, skip
 				if (outterRect == innerRect) {
-					System.out.println("\t\tskip rectangle ^ its the same one");
 					continue;
 				}
 				

@@ -209,7 +209,9 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E>, Iterable
                 for (int i = currentLevel; i >= 0; i--) { 
                     if (node.forward[i] != null) {
                         // if it found a matching node
+//                    	System.out.println("COMPARING " + element + " vs " + node.forward[i].element());
                         if (element.equals(node.forward[i].element())) {
+//                        	System.out.println("\t MATCHES!!!");
                             node = node.forward[i];
                             return node;
                         }
@@ -233,7 +235,9 @@ class SkipList<K extends Comparable<K>, E> implements Dictionary<K, E>, Iterable
             while (node != null) {
                 if (node.forward[0] == null)
                     return null; // if not found
+//                System.out.println("COMPARING " + element + " vs " + node.forward[0].element());
                 if (element.equals(node.forward[0].element())) { // if found
+//                	System.out.print(" MATCHES!!!");
                     node = node.forward[0]; // moves one node
                     return node; //returns result
                 }
