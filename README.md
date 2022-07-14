@@ -1,7 +1,5 @@
 # Data-Structures-and-Algorithms
 
-The following projects were developed along with my peer @ranarahimi
-
 ### Project 1 - Big Numbers Calculator
 
 This is a calculator of integer numbers that can have a size bigger than normal 32-bit and 64-bit integers. Possible operations that it can hold are: Addition, Multiplication and Exponentiation. A linked-list is used as part of the implementation.
@@ -18,3 +16,5 @@ This program represents an external sort algorithm. The program sorts a set of f
 ### Project 4 - SkipList-based storage
 
 The following program implements a SkipList database that is capable of storing Rectangles in a coordinate plane within the constraints of a "world box" located at 0,0 and with dimensions of 1024 x 1024.
+
+These projects were developed along with @ranarhm
